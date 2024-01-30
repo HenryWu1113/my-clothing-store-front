@@ -31,5 +31,5 @@
 }
 </style>
 <script setup lang="ts">
-import { menuSelection } from '@/composables/topBar/menuSelection'
+import { menuSelection } from '@/composables/settings/settings'
 </script>

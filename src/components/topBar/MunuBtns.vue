@@ -3,12 +3,30 @@
     <div class="btn" v-for="menu in menuArr" :key="menu.key" @click="menu.onClick">
       <n-icon :component="menu.icon"></n-icon>
     </div>
-    <div class="user-btn">
-      <n-icon :component="MenuOutlined"></n-icon>
-      <div class="user-icon-wrap">
-        <n-icon :component="UserOutlined"></n-icon>
+    <n-dropdown :options="currentOptions" @select="handleSelect" size="huge">
+      <div class="user-btn">
+        <n-icon :component="MenuOutlined"></n-icon>
+        <div class="user-icon-wrap">
+          <n-icon :component="UserOutlined"></n-icon>
+        </div>
       </div>
-    </div>
+    </n-dropdown>
+    <LoginModal
+      :isOpen="modalControll.isLoginOpen"
+      :onClose="
+        () => {
+          modalControll.isLoginOpen = false
+        }
+      "
+    />
+    <RegisterModal
+      :isOpen="modalControll.isRegisterOpen"
+      :onClose="
+        () => {
+          modalControll.isRegisterOpen = false
+        }
+      "
+    />
   </div>
 </template>
 <style lang="scss" scoped>
@@ -61,14 +79,38 @@
 }
 </style>
 <script setup lang="ts">
-import { ref, reactive, shallowRef } from 'vue'
-import { SkullOutline, HeartOutline, CartOutline, SunnyOutline } from '@vicons/ionicons5'
+import { ref, reactive, shallowRef, h, computed, type Ref } from 'vue'
+import {
+  SkullOutline,
+  HeartOutline,
+  CartOutline,
+  SunnyOutline,
+  PersonCircleOutline as UserIcon,
+  ReaderSharp as OrderIcon,
+  LogOutOutline as LogoutIcon,
+  LogInOutline as LoginIcon,
+  Add as singupIcon
+} from '@vicons/ionicons5'
 import { MenuOutlined, UserOutlined } from '@vicons/antd'
 import { useRouter } from 'vue-router'
-import { menuSelection } from '@/composables/topBar/menuSelection'
+import type { Component } from 'vue'
+import { NIcon } from 'naive-ui'
+
+import LoginModal from '@/components/modals/LoginModal.vue'
+import RegisterModal from '@/components/modals/RegisterModal.vue'
 
 const router = useRouter()
 
+/** 是否登入 */
+const isLogin: Ref<boolean> = ref(false)
+
+/** 登入、註冊彈出的 Modal 控制實例 */
+const modalControll = ref({
+  isLoginOpen: false,
+  isRegisterOpen: false
+})
+
+/** 右上 menu (愛心、購物車、畫面主題) */
 const menuArr = shallowRef([
   {
     key: 'favorite',
@@ -90,4 +132,90 @@ const menuArr = shallowRef([
     onClick: null
   }
 ])
+
+const renderIcon = (icon: Component) => {
+  return () => {
+    return h(
+      NIcon,
+      { size: '24' },
+      {
+        default: () => h(icon)
+      }
+    )
+  }
+}
+
+/** 個人選單選項 */
+const options: IoptionsType[] = reactive([
+  {
+    label: '登入',
+    key: 'login',
+    icon: renderIcon(LoginIcon),
+    login: false,
+    goPage: false
+  },
+  {
+    label: '註冊',
+    key: 'register',
+    icon: renderIcon(singupIcon),
+    login: false,
+    goPage: false
+  },
+  {
+    label: '個人資訊',
+    key: 'profile',
+    icon: renderIcon(UserIcon),
+    login: true,
+    goPage: true
+  },
+  {
+    label: '我的訂單',
+    key: 'order',
+    icon: renderIcon(OrderIcon),
+    login: true,
+    goPage: true
+  },
+  {
+    label: '登出',
+    key: 'logout',
+    icon: renderIcon(LogoutIcon),
+    login: true,
+    goPage: false
+  }
+])
+
+/** 點擊個人選單選項 */
+const handleSelect = (key: string | number, option: IoptionsType) => {
+  console.log(option)
+  if (option.goPage) {
+    router.push(`/${key}`)
+  }
+
+  if (option.key === 'logout') {
+    isLogin.value = false
+  }
+
+  if (option.key === 'login') {
+    modalControll.value.isLoginOpen = true
+    modalControll.value.isRegisterOpen = false
+  } else if (option.key === 'register') {
+    modalControll.value.isRegisterOpen = true
+    modalControll.value.isLoginOpen = false
+  }
+}
+
+/** 登入、未登入選單 */
+const currentOptions = computed(() => {
+  return options.filter((item) => isLogin.value === item.login)
+})
+// ----------
+
+/** 個人選單選項 interface */
+interface IoptionsType {
+  label: string
+  key: string
+  icon: any
+  login: boolean
+  goPage: boolean
+}
 </script>
