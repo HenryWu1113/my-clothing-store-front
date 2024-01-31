@@ -3,7 +3,7 @@
     <div class="btn" v-for="menu in menuArr" :key="menu.key" @click="menu.onClick">
       <n-icon :component="menu.icon"></n-icon>
     </div>
-    <n-dropdown :options="currentOptions" @select="handleSelect" size="huge">
+    <n-dropdown trigger="click" :options="currentOptions" @select="handleSelect" size="huge">
       <div class="user-btn">
         <n-icon :component="MenuOutlined"></n-icon>
         <div class="user-icon-wrap">
@@ -18,6 +18,7 @@
           modalControll.isLoginOpen = false
         }
       "
+      :onSwitch="switchRegister"
     />
     <RegisterModal
       :isOpen="modalControll.isRegisterOpen"
@@ -26,6 +27,7 @@
           modalControll.isRegisterOpen = false
         }
       "
+      :onSwitch="switchLogin"
     />
   </div>
 </template>
@@ -184,6 +186,18 @@ const options: IoptionsType[] = reactive([
   }
 ])
 
+/** 切換登入 */
+const switchLogin = () => {
+  modalControll.value.isLoginOpen = true
+  modalControll.value.isRegisterOpen = false
+}
+
+/** 切換註冊 */
+const switchRegister = () => {
+  modalControll.value.isRegisterOpen = true
+  modalControll.value.isLoginOpen = false
+}
+
 /** 點擊個人選單選項 */
 const handleSelect = (key: string | number, option: IoptionsType) => {
   console.log(option)
@@ -196,11 +210,9 @@ const handleSelect = (key: string | number, option: IoptionsType) => {
   }
 
   if (option.key === 'login') {
-    modalControll.value.isLoginOpen = true
-    modalControll.value.isRegisterOpen = false
+    switchLogin()
   } else if (option.key === 'register') {
-    modalControll.value.isRegisterOpen = true
-    modalControll.value.isLoginOpen = false
+    switchRegister()
   }
 }
 
