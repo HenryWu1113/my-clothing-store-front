@@ -9,14 +9,7 @@
         <div class="modal-body">
           <n-form ref="formRef" :label-width="80" :model="formValue" :rules="rules" size="large">
             <n-form-item label="電子郵件信箱" path="email">
-              <n-input
-                v-model:value="formValue.email"
-                placeholder="請輸入電子郵件信箱"
-                clearables
-              />
-            </n-form-item>
-            <n-form-item label="手機號碼" path="phone">
-              <n-input v-model:value="formValue.phone" placeholder="請輸入手機號碼" clearable />
+              <n-input v-model:value="formValue.email" placeholder="請輸入電子郵件信箱" />
             </n-form-item>
             <n-form-item label="密碼" path="password">
               <n-input
@@ -24,11 +17,12 @@
                 v-model:value="formValue.password"
                 placeholder="請輸入密碼"
                 show-password-on="click"
-                clearable
               />
             </n-form-item>
             <n-form-item>
-              <n-button strong type="tertiary" @click="handleValidateClick">註冊</n-button>
+              <n-button strong type="tertiary" attr-type="submit" @click="handleValidateClick"
+                >註冊</n-button
+              >
             </n-form-item>
           </n-form>
         </div>
@@ -133,6 +127,7 @@ import { LogoGoogle, LogoFacebook, LogoGithub } from '@vicons/ionicons5'
 import { Times } from '@vicons/fa'
 import { useMessage } from 'naive-ui'
 import { isEmail, isMobilePhone } from 'validator'
+import { api } from '@/plugins/axios'
 
 const message = useMessage()
 
@@ -155,7 +150,6 @@ const formRef = ref<any>(null)
 
 const formValue = ref({
   email: '',
-  phone: '',
   password: ''
 })
 
@@ -172,18 +166,18 @@ const rules = {
       return true
     }
   },
-  phone: {
-    required: true,
-    trigger: ['input', 'blur'],
-    validator(rule: any, value: string) {
-      if (value.length === 0) {
-        return new Error('手機號碼必填')
-      } else if (!isMobilePhone(value, 'zh-TW')) {
-        return new Error('手機號碼格式錯誤')
-      }
-      return true
-    }
-  },
+  // cellphone: {
+  //   required: true,
+  //   trigger: ['input', 'blur'],
+  //   validator(rule: any, value: string) {
+  //     if (value.length === 0) {
+  //       return new Error('手機號碼必填')
+  //     } else if (!isMobilePhone(value, 'zh-TW')) {
+  //       return new Error('手機號碼格式錯誤')
+  //     }
+  //     return true
+  //   }
+  // },
   password: {
     required: true,
     trigger: ['input', 'blur'],
@@ -204,10 +198,24 @@ const handleValidateClick = (e: MouseEvent) => {
   e.preventDefault()
   formRef.value?.validate((errors: any) => {
     if (!errors) {
-      message.success('Success')
+      register()
     } else {
       message.error('不符合驗證')
     }
   })
+}
+
+const register = async () => {
+  try {
+    const { data } = await api.post('/users', formValue.value)
+    message.success(data?.message)
+
+    // 關掉 modal
+    props.onClose()
+  } catch (error: any) {
+    error.isAxiosError && error?.response?.data
+      ? message.error(error?.response?.data?.message)
+      : message.error('創建失敗')
+  }
 }
 </script>

@@ -9,11 +9,7 @@
         <div class="modal-body">
           <n-form ref="formRef" :label-width="80" :model="formValue" :rules="rules" size="large">
             <n-form-item label="電子郵件信箱" path="email">
-              <n-input
-                v-model:value="formValue.email"
-                placeholder="請輸入電子郵件信箱"
-                clearables
-              />
+              <n-input v-model:value="formValue.email" placeholder="請輸入電子郵件信箱" />
             </n-form-item>
             <n-form-item label="密碼" path="password">
               <n-input
@@ -21,11 +17,12 @@
                 v-model:value="formValue.password"
                 placeholder="請輸入密碼"
                 show-password-on="click"
-                clearable
               />
             </n-form-item>
             <n-form-item>
-              <n-button strong type="tertiary" @click="handleValidateClick">登入</n-button>
+              <n-button strong type="tertiary" attr-type="submit" @click="handleValidateClick"
+                >登入</n-button
+              >
             </n-form-item>
           </n-form>
         </div>
@@ -130,8 +127,12 @@ import { LogoGoogle, LogoFacebook, LogoGithub } from '@vicons/ionicons5'
 import { Times } from '@vicons/fa'
 import { useMessage } from 'naive-ui'
 import { isEmail, isMobilePhone } from 'validator'
+import { useUserStore } from '@/stores/user'
+import { storeToRefs } from 'pinia'
+import { api } from '@/plugins/axios'
 
 const message = useMessage()
+const user = useUserStore()
 
 const props = defineProps({
   isOpen: {
@@ -188,7 +189,20 @@ const handleValidateClick = (e: MouseEvent) => {
   e.preventDefault()
   formRef.value?.validate((errors: any) => {
     if (!errors) {
-      message.success('Success')
+      user
+        .login(formValue.value)
+        .then((res) => {
+          console.log(res)
+          // message.success(data?.message)
+          message.success('ok')
+          props.onClose()
+        })
+        .catch((error: any) => {
+          console.log(error)
+          message.error(
+            error.isAxiosError && error?.response?.data ? error.response.data.message : '發生錯誤'
+          )
+        })
     } else {
       message.error('不符合驗證')
     }

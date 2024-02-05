@@ -97,14 +97,16 @@ import { MenuOutlined, UserOutlined } from '@vicons/antd'
 import { useRouter } from 'vue-router'
 import type { Component } from 'vue'
 import { NIcon } from 'naive-ui'
+import { useUserStore } from '@/stores/user'
+import { storeToRefs } from 'pinia'
 
 import LoginModal from '@/components/modals/LoginModal.vue'
 import RegisterModal from '@/components/modals/RegisterModal.vue'
 
 const router = useRouter()
 
-/** 是否登入 */
-const isLogin: Ref<boolean> = ref(false)
+const user = useUserStore()
+const { isLogin } = storeToRefs(user)
 
 /** 登入、註冊彈出的 Modal 控制實例 */
 const modalControll = ref({
@@ -206,7 +208,7 @@ const handleSelect = (key: string | number, option: IoptionsType) => {
   }
 
   if (option.key === 'logout') {
-    isLogin.value = false
+    user.logout()
   }
 
   if (option.key === 'login') {
