@@ -99,11 +99,13 @@ import type { Component } from 'vue'
 import { NIcon } from 'naive-ui'
 import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
+import { useMessage } from 'naive-ui'
 
 import LoginModal from '@/components/modals/LoginModal.vue'
 import RegisterModal from '@/components/modals/RegisterModal.vue'
 
 const router = useRouter()
+const message = useMessage()
 
 const user = useUserStore()
 const { isLogin } = storeToRefs(user)
@@ -201,14 +203,20 @@ const switchRegister = () => {
 }
 
 /** 點擊個人選單選項 */
-const handleSelect = (key: string | number, option: IoptionsType) => {
+const handleSelect = async(key: string | number, option: IoptionsType) => {
   console.log(option)
   if (option.goPage) {
     router.push(`/${key}`)
   }
 
   if (option.key === 'logout') {
-    user.logout()
+
+    try {
+      await user.logout()
+      message.success('登出成功')
+    } catch (error) {
+      message.error('登出失敗')
+    }
   }
 
   if (option.key === 'login') {

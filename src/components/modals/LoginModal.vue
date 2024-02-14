@@ -191,10 +191,8 @@ const handleValidateClick = (e: MouseEvent) => {
     if (!errors) {
       user
         .login(formValue.value)
-        .then((res) => {
-          console.log(res)
-          // message.success(data?.message)
-          message.success('ok')
+        .then(() => {
+          message.success('登入成功')
           props.onClose()
         })
         .catch((error: any) => {

@@ -27,17 +27,20 @@ export const useUserStore = defineStore(
     })
     // actions
     const login = async (form: { email: string; password: string }) => {
-      try {
         const { data } = await api.post('/users/login', form)
+        console.log(data)
         router.push('/')
         token.value = data.result.token
-      } catch (error: any) {
-        console.log(error)
-      }
     }
 
-    const logout = () => {
-      token.value = ''
+    const logout = async() => {
+      return new Promise<void>((res)=>{
+        setTimeout(() => {
+        token.value = ''
+        router.push('/')
+        res()
+      }, 100);
+      })
     }
 
     return {
