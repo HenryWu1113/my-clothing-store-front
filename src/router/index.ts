@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import TopBarFront from '@/components/topBar/TopBarFront.vue'
+import { useUserStore } from '@/stores/user'
 
 const mainTitle = '我的商城'
 
@@ -100,6 +101,19 @@ const router = createRouter({
 
 router.afterEach((to, from) => {
   document.title = to.meta.title
+})
+
+router.beforeEach((to, from, next) => {
+  const user = useUserStore()
+
+  if (user.isLogin && (to.path === '/register' || to.path === '/login')) {
+    next('/')
+  } else if (to.meta.login && !user.isLogin) {
+    alert('not Auth')
+    next('/')
+  } else {
+    next()
+  }
 })
 
 export default router

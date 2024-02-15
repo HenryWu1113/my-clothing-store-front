@@ -1,7 +1,10 @@
 <template>
   <div class="page-menu-btns-wrap">
     <div class="btn" v-for="menu in menuArr" :key="menu.key" @click="menu.onClick">
-      <n-icon :component="menu.icon"></n-icon>
+      <n-badge v-if="menu.key === 'cart'" :value="cart" :max="10">
+        <n-icon :component="menu.icon"></n-icon>
+      </n-badge>
+      <n-icon v-else :component="menu.icon"></n-icon>
     </div>
     <n-dropdown trigger="click" :options="currentOptions" @select="handleSelect" size="huge">
       <div class="user-btn">
@@ -50,6 +53,9 @@
     cursor: pointer;
     &:hover {
       background: $light1;
+    }
+    .n-icon {
+      color: $dark;
     }
   }
 
@@ -108,7 +114,7 @@ const router = useRouter()
 const message = useMessage()
 
 const user = useUserStore()
-const { isLogin } = storeToRefs(user)
+const { isLogin, cart } = storeToRefs(user)
 
 /** 登入、註冊彈出的 Modal 控制實例 */
 const modalControll = ref({
@@ -119,17 +125,17 @@ const modalControll = ref({
 /** 右上 menu (愛心、購物車、畫面主題) */
 const menuArr = shallowRef([
   {
-    key: 'favorite',
-    icon: HeartOutline,
-    onClick: () => {
-      router.push('/favorite')
-    }
-  },
-  {
     key: 'cart',
     icon: CartOutline,
     onClick: () => {
       router.push('/cart')
+    }
+  },
+  {
+    key: 'favorite',
+    icon: HeartOutline,
+    onClick: () => {
+      router.push('/favorite')
     }
   },
   {
@@ -203,14 +209,13 @@ const switchRegister = () => {
 }
 
 /** 點擊個人選單選項 */
-const handleSelect = async(key: string | number, option: IoptionsType) => {
+const handleSelect = async (key: string | number, option: IoptionsType) => {
   console.log(option)
   if (option.goPage) {
     router.push(`/${key}`)
   }
 
   if (option.key === 'logout') {
-
     try {
       await user.logout()
       message.success('登出成功')

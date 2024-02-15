@@ -26,21 +26,61 @@ export const useUserStore = defineStore(
       return token.value.length !== 0
     })
     // actions
-    const login = async (form: { email: string; password: string }) => {
-        const { data } = await api.post('/users/login', form)
-        console.log(data)
-        router.push('/')
-        token.value = data.result.token
+    async function login(form: { email: string; password: string }) {
+      const { data } = await api().post('/users/login', form)
+      console.log(data)
+      router.push('/')
+      token.value = data.result.token
+      getUser()
     }
 
-    const logout = async() => {
-      return new Promise<void>((res)=>{
+    async function getUser() {
+      if (token.value.length === 0) return
+      try {
+        const { data } = await api('auth').get('/users')
+        console.log(data)
+        email.value = data.result.email
+        address.value = data.result.address ?? ''
+        cellphone.value = data.result.cellphone ?? ''
+        name.value = data.result.name ?? ''
+        sex.value = data.result.sex ?? ''
+        birthday.value = data.result.birthday ?? ''
+        avatar.value = data.result.avatar ?? ''
+        backgroundImg.value = data.result.backgroundImg ?? ''
+        favorites.value = data.result.favorites
+        cart.value = data.result.cart.length
+        // theme.value = ''
+      } catch (error) {
+        logout()
+      }
+    }
+
+    async function logout() {
+      await api('auth').delete('/users/logout')
+      resetPiniaVal()
+      return new Promise<void>((res) => {
         setTimeout(() => {
-        token.value = ''
-        router.push('/')
-        res()
-      }, 100);
+          token.value = ''
+          router.push('/')
+          res()
+        }, 100)
       })
+    }
+
+    /** 初始 useUserStore 值 */
+    const resetPiniaVal = () => {
+      token.value = ''
+      email.value = ''
+      address.value = ''
+      cellphone.value = ''
+      name.value = ''
+      sex.value = ''
+      birthday.value = ''
+      avatar.value = ''
+      backgroundImg.value = ''
+      favorites.value = []
+      cart.value = 0
+      // theme.value = ''
     }
 
     return {
@@ -58,6 +98,7 @@ export const useUserStore = defineStore(
       theme,
       isLogin,
       login,
+      getUser,
       logout
     }
   },
