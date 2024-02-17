@@ -207,7 +207,7 @@ const handleValidateClick = (e: MouseEvent) => {
 
 const register = async () => {
   try {
-    const { data } = await api.post('/users', formValue.value)
+    const { data } = await api().post('/users', formValue.value)
     message.success(data?.message)
 
     // 關掉 modal
