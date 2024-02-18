@@ -2,8 +2,7 @@ html,
 body {
   height: 100%;
 
-  .container {
-    max-width: 2520px;
+  .myContainer {
     padding: 1.5rem 5rem;
 
     @include xl {
