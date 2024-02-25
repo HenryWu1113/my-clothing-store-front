@@ -1,24 +1,43 @@
+:root {
+  --bg-color: white;
+  --text-color: black;
+}
+
 html,
 body {
   height: 100%;
+  @include scroll;
 
   .myContainer {
-    padding: 1.5rem 5rem;
+    padding: 96px 15rem 1.5rem 15rem;
 
     @include xl {
-      padding: 1rem 5rem;
+      padding: 88px 5rem 1rem 5rem;
     }
 
     @include md {
-      padding: 1rem 2.5rem;
+      padding: 88px 2.5rem 1rem 2.5rem;
     }
 
     @include sm {
-      padding: 1rem;
+      padding: 88px 1rem 1rem 1rem;
     }
 
     @include xs {
-      padding: 0.5rem;
+      padding: 80px 0.5rem 0.5rem 0.5rem;
+    }
+  }
+
+  .n-image-preview-container,
+  .n-drawer-container,
+  .n-modal-container,
+  .n-message-container {
+    z-index: 10000 !important;
+  }
+
+  .n-modal-container {
+    .n-button--warning-type {
+      background-color: var(--n-color);
     }
   }
 }

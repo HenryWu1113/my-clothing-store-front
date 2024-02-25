@@ -32,7 +32,7 @@ const router = createRouter({
         {
           path: 'category',
           name: 'category',
-          component: () => import('../views/HomeView.vue'),
+          component: () => import('../views/ProductsView.vue'),
           meta: {
             title: `${mainTitle} | 分類`,
             login: false,

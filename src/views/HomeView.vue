@@ -1,5 +1,5 @@
 <template>
-  <div>Home</div>
+  <div class="myContainer h-screen">Home</div>
 </template>
 
 <style lang="scss" scoped></style>
