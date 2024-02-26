@@ -55,6 +55,18 @@ export const useUserStore = defineStore(
       }
     }
 
+    async function editFav(product_Id: string) {
+      const { data } = await api('auth').post('/users/favorite', { product: product_Id })
+      favorites.value = data.result
+      return data
+    }
+
+    async function getFav() {
+      const { data } = await api('auth').get('/users/favorite')
+      favorites.value = data.result.map((item: any) => item._id)
+      return data
+    }
+
     async function logout() {
       await api('auth').delete('/users/logout')
       resetPiniaVal()
@@ -99,7 +111,10 @@ export const useUserStore = defineStore(
       isLogin,
       login,
       getUser,
-      logout
+      editFav,
+      getFav,
+      logout,
+      resetPiniaVal
     }
   },
   {

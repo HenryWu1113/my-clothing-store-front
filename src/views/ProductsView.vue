@@ -64,8 +64,20 @@
     flex-wrap: wrap;
     gap: 1rem;
     > div {
-      width: calc((100% - 3rem) / 4);
-      // aspect-ratio: 1/3 !important;
+      width: calc((100% - 4rem) / 5);
+      aspect-ratio: 2/3 !important;
+      @include xxxxl {
+        width: calc((100% - 3rem) / 4);
+      }
+      @include xxxl {
+        width: calc((100% - 2rem) / 3);
+      }
+      @include md {
+        width: calc((100% - 1rem) / 2);
+      }
+      @include sm {
+        width: 100%;
+      }
       &.n-skeleton {
         height: auto !important;
       }
