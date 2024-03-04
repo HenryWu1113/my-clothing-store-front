@@ -1,5 +1,9 @@
 <template>
-  <n-config-provider :locale="locale" :date-locale="dateLocale" :theme="void 0">
+  <n-config-provider
+    :locale="locale"
+    :date-locale="dateLocale"
+    :theme="isLight ? void 0 : darkTheme"
+  >
     <n-message-provider>
       <n-dialog-provider>
         <n-back-top class="backTop" :right="20" :bottom="20" />
@@ -17,7 +21,9 @@ import { RouterView } from 'vue-router'
 import { darkTheme } from 'naive-ui'
 import type { NLocale, NDateLocale } from 'naive-ui'
 import { useUserStore } from '@/stores/user'
+import useTheme from '@/composables/useTheme'
 
+const { isLight } = useTheme()
 const { getUser } = useUserStore()
 
 const locale = ref(null as NLocale | null)

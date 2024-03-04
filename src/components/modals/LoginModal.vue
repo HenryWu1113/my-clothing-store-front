@@ -1,43 +1,45 @@
 <template>
   <Teleport to="body">
-    <div v-if="isOpen" class="modal-mask">
-      <div class="modal">
-        <div class="modal-title">
-          <p>登入</p>
-          <n-icon :component="Times" @click="onClose"></n-icon>
-        </div>
-        <div class="modal-body">
-          <n-form ref="formRef" :label-width="80" :model="formValue" :rules="rules" size="large">
-            <n-form-item label="電子郵件信箱" path="email">
-              <n-input v-model:value="formValue.email" placeholder="請輸入電子郵件信箱" />
-            </n-form-item>
-            <n-form-item label="密碼" path="password">
-              <n-input
-                type="password"
-                v-model:value="formValue.password"
-                placeholder="請輸入密碼"
-                show-password-on="click"
-              />
-            </n-form-item>
-            <n-form-item>
-              <n-button strong type="tertiary" attr-type="submit" @click="handleValidateClick"
-                >登入</n-button
-              >
-            </n-form-item>
-          </n-form>
-        </div>
-        <div class="modal-footer">
-          <div class="quick-login">
-            <n-icon :component="LogoGoogle"></n-icon>
-            <n-icon :component="LogoFacebook"></n-icon>
-            <n-icon :component="LogoGithub"></n-icon>
+    <transition name="modal">
+      <div v-if="isOpen" class="modal-mask">
+        <div class="modal">
+          <div class="modal-title">
+            <p>登入</p>
+            <n-icon :component="Times" @click="onClose(), addCloseClass()"></n-icon>
           </div>
-          <div class="goto-login">
-            <p @click="onSwitch">尚未註冊? 前往註冊</p>
+          <div class="modal-body">
+            <n-form ref="formRef" :label-width="80" :model="formValue" :rules="rules" size="large">
+              <n-form-item label="電子郵件信箱" path="email">
+                <n-input v-model:value="formValue.email" placeholder="請輸入電子郵件信箱" />
+              </n-form-item>
+              <n-form-item label="密碼" path="password">
+                <n-input
+                  type="password"
+                  v-model:value="formValue.password"
+                  placeholder="請輸入密碼"
+                  show-password-on="click"
+                />
+              </n-form-item>
+              <n-form-item>
+                <n-button strong type="tertiary" attr-type="submit" @click="handleValidateClick"
+                  >登入</n-button
+                >
+              </n-form-item>
+            </n-form>
+          </div>
+          <div class="modal-footer">
+            <div class="quick-login">
+              <n-icon :component="LogoGoogle"></n-icon>
+              <n-icon :component="LogoFacebook"></n-icon>
+              <n-icon :component="LogoGithub"></n-icon>
+            </div>
+            <div class="goto-login">
+              <p @click="onSwitch">尚未註冊? 前往註冊</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </transition>
   </Teleport>
 </template>
 
@@ -46,19 +48,35 @@
 .modal-mask {
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+  background: $modal-bg-color;
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 999;
+  z-index: 10000;
   .modal {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background: $light;
+    background: $bg-color;
     border-radius: 10px;
     width: 40%;
+    animation: onOpen 0.5s ease forwards;
+    &.close {
+      animation: onClose 0.5s ease forwards;
+    }
+    @keyframes onOpen {
+      0% {
+        top: 70%;
+        opacity: 0;
+      }
+    }
+    @keyframes onClose {
+      100% {
+        top: 70%;
+        opacity: 0;
+      }
+    }
     @include lg {
       width: 50%;
     }
@@ -75,8 +93,9 @@
       align-items: center;
       justify-content: flex-end;
       padding: 1rem;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: bold;
+      color: $text-color;
       > p {
         position: absolute;
         left: 50%;
@@ -96,7 +115,8 @@
     }
 
     .modal-footer {
-      border-top: 1px solid $light1;
+      color: $text-color;
+      border-top: 1px solid $border-color;
       padding: 10px;
       .quick-login {
         display: flex;
@@ -113,6 +133,7 @@
         display: flex;
         justify-content: flex-end;
         > p {
+          font-size: 1rem;
           cursor: pointer;
         }
       }
@@ -185,6 +206,12 @@ const rules = {
   }
 }
 
+function addCloseClass() {
+  const modal: HTMLElement = document.querySelector('.modal')!
+  if (!modal) return
+  modal.classList.add('close')
+}
+
 const handleValidateClick = (e: MouseEvent) => {
   e.preventDefault()
   formRef.value?.validate((errors: any) => {
@@ -194,6 +221,7 @@ const handleValidateClick = (e: MouseEvent) => {
         .then(() => {
           message.success('登入成功')
           props.onClose()
+          addCloseClass()
         })
         .catch((error: any) => {
           console.log(error)

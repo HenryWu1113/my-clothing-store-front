@@ -49,13 +49,13 @@
     padding: 0.5rem;
     border-radius: 50%;
     font-size: 1.6rem;
-    color: $dark;
+    color: $text-color;
     cursor: pointer;
     &:hover {
-      background: $light1;
+      background: $border-color;
     }
     .n-icon {
-      color: $dark;
+      color: $text-color;
     }
   }
 
@@ -63,24 +63,27 @@
     padding: 0.25rem 0.5rem;
     transition: 0.15s;
     border-radius: 9999px;
-    border: 1px solid $light1;
+    border: 1px solid $border-color;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 0.8rem;
     font-size: 1.2rem;
+    > .n-icon {
+      color: $text-color;
+    }
     &:hover {
-      box-shadow: 0 5px 10px $light1;
+      box-shadow: 0 5px 10px $border-color;
     }
     .user-icon-wrap {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: $light1;
+      background: $border-color;
       border-radius: 50%;
       padding: 0.3rem;
       font-size: 1.5rem;
-      color: $light;
+      color: white;
       font-weight: bold;
     }
   }
@@ -109,7 +112,9 @@ import { useMessage } from 'naive-ui'
 
 import LoginModal from '@/components/modals/LoginModal.vue'
 import RegisterModal from '@/components/modals/RegisterModal.vue'
+import useTheme from '@/composables/useTheme'
 
+const { theme } = useTheme()
 const router = useRouter()
 const message = useMessage()
 
@@ -141,9 +146,19 @@ const menuArr = shallowRef([
   {
     key: 'theme',
     icon: SunnyOutline,
-    onClick: null
+    onClick: changeTheme
   }
 ])
+
+function changeTheme() {
+  const reverseObj = {
+    light: 'dark',
+    dark: 'light'
+  }
+  theme.value = reverseObj[theme.value] as 'light' | 'dark'
+}
+
+// ------------------------
 
 const renderIcon = (icon: Component) => {
   return () => {

@@ -15,7 +15,7 @@
 
 header {
   height: 72px;
-  border-bottom: 1px solid $light1;
+  border-bottom: 1px solid $border-color;
   display: flex;
   padding: 0 1rem;
   width: 100%;
@@ -23,7 +23,7 @@ header {
   top: 0;
   left: 0;
   z-index: 9999;
-  background: $light;
+  background: $bg-color;
 }
 </style>
 

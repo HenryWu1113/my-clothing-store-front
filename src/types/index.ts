@@ -11,7 +11,7 @@ export interface IProduct {
   images: string[]
   name: string
   price: number
-  ratings: any
+  ratings: { _id: string; score: number }[]
   sell: boolean
   sizes: string[]
   soldQuantity: number

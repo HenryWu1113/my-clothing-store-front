@@ -16,7 +16,7 @@
       <div class="product-name">{{ product.name }}</div>
       <div class="product-price">NT. {{ numberToCommaString(product.price) }}</div>
       <div class="product-rate">
-        <n-rate readonly :value="rateValue" />
+        <n-rate readonly :title="rateValue" allow-half :value="rateValue" />
         <p>({{ product.ratings.length }})</p>
         <n-icon
           @click="editFavorite(product._id)"
@@ -33,8 +33,8 @@
 @import '@/styles/styles';
 .product-card {
   border-radius: 10px;
-  // border: 1px solid $light1;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  // border: 1px solid $border-color;
+  box-shadow: 0px 0px 5px $border-color;
   overflow: hidden;
   cursor: pointer;
   .product-img-wrap {
@@ -66,7 +66,7 @@
           width: 16px;
           height: 16px;
           border-radius: 50%;
-          background: white;
+          background: $bg-color;
           position: absolute;
           left: 50%;
           top: 50%;
@@ -87,9 +87,11 @@
       height: 60px;
       font-size: 1.2rem;
       font-weight: bold;
+      color: $text-color;
     }
     .product-price {
       font-size: 1.2rem;
+      color: $text-color;
     }
     .product-rate {
       display: flex;
@@ -98,6 +100,7 @@
         padding-top: 2px;
         margin-left: 0.5rem;
         margin-right: auto;
+        color: $text-color;
       }
       > .n-icon {
         color: red;
@@ -141,7 +144,14 @@ async function editFavorite(product_Id: string) {
 }
 
 const rateValue = computed(() => {
-  return props.product.ratings.reduce((acc: any, curr: number) => acc + curr, 0)
+  console.log(
+    props.product.ratings.reduce((acc: any, curr: any) => acc + curr.score, 0) /
+      props.product.ratings.length
+  )
+  return (
+    props.product.ratings.reduce((acc: any, curr: any) => acc + curr.score, 0) /
+    props.product.ratings.length
+  )
 })
 
 const isFavorite = computed(() => {

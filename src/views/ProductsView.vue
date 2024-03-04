@@ -41,9 +41,10 @@
     text-align: center;
     font-weight: bold;
     font-size: 30px;
+    color: $text-color;
   }
   .product-filter-wrap {
-    border: 1px solid $light1;
+    border: 1px solid $border-color;
     padding: 1rem;
     display: flex;
     align-items: center;
@@ -51,6 +52,7 @@
     > .n-icon {
       font-size: 1.5rem;
       cursor: pointer;
+      color: $text-color;
     }
     .price-range {
       display: flex;

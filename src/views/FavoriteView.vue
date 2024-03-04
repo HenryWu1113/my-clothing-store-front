@@ -39,7 +39,7 @@
     font-size: 30px;
   }
   .product-filter-wrap {
-    border: 1px solid $light1;
+    border: 1px solid $border-color;
     padding: 1rem;
     display: flex;
     align-items: center;
