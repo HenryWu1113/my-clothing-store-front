@@ -4,7 +4,7 @@
       class="btn"
       v-for="menu in menuSelection"
       :key="menu.key"
-      @click="$router.push(`/category?clothingGender=${menu.query}`)"
+      @click="$router.push(`/category?${menu.query}`)"
     >
       {{ menu.text }}
     </div>

@@ -3,11 +3,11 @@ export const menuSelection = [
   {
     key: 'man',
     text: '男裝',
-    query: 'male'
+    query: 'clothingGender=male&sort=integrate'
   },
   {
     key: 'woman',
     text: '女裝',
-    query: 'female'
+    query: 'clothingGender=female&sort=integrate'
   }
 ]
