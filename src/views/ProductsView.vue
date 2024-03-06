@@ -6,62 +6,43 @@
     <div class="slogan">精選商品分類</div>
     <div class="product-filter-wrap">
       <div class="sort-btn-wrap">
-        <div
-          v-for="btnInfo in filterSortBtns"
-          :class="['sort-btn', selectSortValue === btnInfo.value ? 'active' : '']"
-          :key="btnInfo.value"
-          @click="selectSort(btnInfo.value)"
-        >
+        <div v-for="btnInfo in filterSortBtns" :class="['sort-btn', selectSortValue === btnInfo.value ? 'active' : '']"
+          :key="btnInfo.value" @click="selectSort(btnInfo.value)">
           <p>{{ btnInfo.text }}</p>
           <n-icon v-if="btnInfo.icon" :component="btnInfo.icon"></n-icon>
         </div>
       </div>
       <n-space align="center">
         <n-switch v-model:value="disabled" />
-        <n-input-number
-          v-model:value="priceRange.gte"
-          :validator="(x: number) => x < priceRange.lte"
-          :disabled="disabled"
-          :min="0"
-        />
-        <n-input-number
-          v-model:value="priceRange.lte"
-          :validator="(x: number) => x > priceRange.gte"
-          :disabled="disabled"
-          :min="1"
-        />
-        <n-input
-          class="query-input"
-          v-model:value="keyword"
-          type="text"
-          placeholder="Basic Input"
-          clearable
-        />
+        <n-input-number v-model:value="priceRange.gte" :validator="(x: number) => x < priceRange.lte"
+          :disabled="disabled" :min="0" />
+        <n-input-number v-model:value="priceRange.lte" :validator="(x: number) => x > priceRange.gte"
+          :disabled="disabled" :min="1" />
+        <n-input class="query-input" v-model:value="keyword" type="text" placeholder="Basic Input" clearable />
         <n-button @click="advanceSearch()">確認</n-button>
       </n-space>
     </div>
     <div class="product-wrap">
       <template v-if="loading">
-        <n-skeleton
-          v-for="item in Array.from({ length: 20 }, (value, idx) => idx)"
-          :key="item"
-          :sharp="false"
-          size="medium"
-        />
+        <n-skeleton v-for="item in Array.from({ length: 20 }, (_, idx) => idx)" :key="item" :sharp="false"
+          size="medium" />
       </template>
-      <ProductCard v-else v-for="product in products" :key="product._id" :product="product" />
+      <ProductCard v-else-if="!loading && products.length > 0" v-for="product in products" :key="product._id"
+        :product="product" />
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 @import '@/styles/styles';
+
 .products-view {
-  > .category-top {
-    > img {
+  >.category-top {
+    >img {
       width: 100%;
     }
   }
+
   .slogan {
     padding: 2rem;
     text-align: center;
@@ -69,16 +50,19 @@
     font-size: 30px;
     color: $text-color;
   }
+
   .product-filter-wrap {
     border: 1px solid $border-color;
     padding: 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     .sort-btn-wrap {
       display: flex;
       align-items: center;
       gap: 10px;
+
       .sort-btn {
         font-size: 1rem;
         color: $text-color;
@@ -89,6 +73,7 @@
         display: flex;
         align-items: center;
         gap: 5px;
+
         &.active {
           border: 2px solid rgb(154, 223, 247);
           font-weight: bold;
@@ -97,31 +82,39 @@
         }
       }
     }
+
     .query-input {
       --n-font-size: 1rem !important;
       width: 200px;
     }
   }
+
   .product-wrap {
     padding: 2rem 0;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    > div {
+
+    >div {
       width: calc((100% - 4rem) / 5);
       aspect-ratio: 2/3 !important;
+
       @include xxxxl {
         width: calc((100% - 3rem) / 4);
       }
+
       @include xxxl {
         width: calc((100% - 2rem) / 3);
       }
+
       @include md {
         width: calc((100% - 1rem) / 2);
       }
+
       @include sm {
         width: 100%;
       }
+
       &.n-skeleton {
         height: auto !important;
       }
@@ -139,6 +132,7 @@ import { useRouter, useRoute } from 'vue-router'
 import type { IProduct } from '@/types'
 import queryString from 'query-string'
 import { ArrowUpOutlined, ArrowDownOutlined } from '@vicons/antd'
+import _ from 'lodash'
 
 import ProductCard from '@/components/cards/ProductCard.vue'
 
@@ -248,6 +242,16 @@ function advanceSearch() {
   router.push(`/category?${str}`)
 }
 
+function resetFilter() {
+  priceRange.value = {
+    gte: 0,
+    lte: 1000
+  }
+  disabled.value = true
+  keyword.value = ''
+  selectSortValue.value = 'integrate'
+}
+
 /** 排序按鈕顯示情況 */
 const filterSortBtns = computed(() => {
   return sortBtnsInfo.value.filter((item) => {
@@ -259,9 +263,13 @@ const filterSortBtns = computed(() => {
 })
 
 watch(
-  () => route,
-  (newVal) => {
+  () => _.cloneDeep(route),
+  (newVal, oldVal) => {
     console.log(newVal.query)
+
+    if (newVal.query.clothingGender !== oldVal?.query?.clothingGender) {
+      resetFilter()
+    }
 
     getProducts(newVal.query)
   },
