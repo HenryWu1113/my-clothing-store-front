@@ -6,29 +6,58 @@
     <div class="slogan">精選商品分類</div>
     <div class="product-filter-wrap">
       <div class="sort-btn-wrap">
-        <div v-for="btnInfo in filterSortBtns" :class="['sort-btn', selectSortValue === btnInfo.value ? 'active' : '']"
-          :key="btnInfo.value" @click="selectSort(btnInfo.value)">
+        <div
+          v-for="btnInfo in filterSortBtns"
+          :class="['sort-btn', selectSortValue === btnInfo.value ? 'active' : '']"
+          :key="btnInfo.value"
+          @click="selectSort(btnInfo.value)"
+        >
           <p>{{ btnInfo.text }}</p>
           <n-icon v-if="btnInfo.icon" :component="btnInfo.icon"></n-icon>
         </div>
       </div>
       <n-space align="center">
         <n-switch v-model:value="disabled" />
-        <n-input-number v-model:value="priceRange.gte" :validator="(x: number) => x < priceRange.lte"
-          :disabled="disabled" :min="0" />
-        <n-input-number v-model:value="priceRange.lte" :validator="(x: number) => x > priceRange.gte"
-          :disabled="disabled" :min="1" />
-        <n-input class="query-input" v-model:value="keyword" type="text" placeholder="Basic Input" clearable />
+        <n-input-number
+          class="price-input"
+          v-model:value="priceRange.gte"
+          :validator="(x: number) => x < priceRange.lte"
+          :disabled="disabled"
+          :min="0"
+        />
+        <n-input-number
+          class="price-input"
+          v-model:value="priceRange.lte"
+          :validator="(x: number) => x > priceRange.gte"
+          :disabled="disabled"
+          :min="1"
+        />
+        <n-input
+          class="query-input"
+          v-model:value="keyword"
+          type="text"
+          placeholder="Basic Input"
+          clearable
+        />
         <n-button @click="advanceSearch()">確認</n-button>
       </n-space>
     </div>
     <div class="product-wrap">
       <template v-if="loading">
-        <n-skeleton v-for="item in Array.from({ length: 20 }, (_, idx) => idx)" :key="item" :sharp="false"
-          size="medium" />
+        <n-skeleton
+          v-for="item in Array.from({ length: 20 }, (_, idx) => idx)"
+          :key="item"
+          :sharp="false"
+          size="medium"
+        />
       </template>
-      <ProductCard v-else-if="!loading && products.length > 0" v-for="product in products" :key="product._id"
-        :product="product" />
+      <ProductCard
+        v-else-if="!loading && products.length > 0"
+        v-for="product in products"
+        :key="product._id"
+        :product="product"
+        @click="$router.push(`product/${product._id}`)"
+      />
     </div>
   </div>
 </template>
@@ -37,8 +66,8 @@
 @import '@/styles/styles';
 
 .products-view {
-  >.category-top {
-    >img {
+  > .category-top {
+    > img {
       width: 100%;
     }
   }
@@ -57,7 +86,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    gap: 10px;
+    @include xxl {
+      flex-direction: column;
+    }
     .sort-btn-wrap {
       display: flex;
       align-items: center;
@@ -83,9 +115,13 @@
       }
     }
 
+    .price-input {
+      --n-font-size: 1rem !important;
+      width: 120px;
+    }
     .query-input {
       --n-font-size: 1rem !important;
-      width: 200px;
+      width: 150px;
     }
   }
 
@@ -95,7 +131,7 @@
     flex-wrap: wrap;
     gap: 1rem;
 
-    >div {
+    > div {
       width: calc((100% - 4rem) / 5);
       aspect-ratio: 2/3 !important;
 

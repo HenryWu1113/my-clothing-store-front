@@ -19,11 +19,11 @@
         <n-rate readonly :title="rateValue" allow-half :value="rateValue" />
         <p>({{ product.ratings.length }})</p>
         <n-icon
-          @click="editFavorite(product._id)"
+          @click.stop="editFavorite(product._id)"
           v-if="isFavorite"
           :component="HeartSharp"
         ></n-icon>
-        <n-icon @click="editFavorite(product._id)" v-else :component="HeartOutline"></n-icon>
+        <n-icon @click.stop="editFavorite(product._id)" v-else :component="HeartOutline"></n-icon>
       </div>
     </div>
   </div>

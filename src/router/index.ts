@@ -25,8 +25,7 @@ const router = createRouter({
           component: () => import('../views/HomeView.vue'),
           meta: {
             title: `${mainTitle} | 首頁`,
-            login: false,
-            admin: false
+            login: false
           }
         },
         {
@@ -35,8 +34,16 @@ const router = createRouter({
           component: () => import('../views/ProductsView.vue'),
           meta: {
             title: `${mainTitle} | 分類`,
-            login: false,
-            admin: false
+            login: false
+          }
+        },
+        {
+          path: 'product/:id',
+          name: 'product',
+          component: () => import('../views/ProductView.vue'),
+          meta: {
+            title: `${mainTitle} | 商品`,
+            login: false
           }
         },
         {
@@ -45,8 +52,7 @@ const router = createRouter({
           component: () => import('../views/FavoriteView.vue'),
           meta: {
             title: `${mainTitle} | 我的收藏`,
-            login: true,
-            admin: false
+            login: true
           }
         },
         {
@@ -55,8 +61,7 @@ const router = createRouter({
           component: () => import('../views/CartView.vue'),
           meta: {
             title: `${mainTitle} | 購物車`,
-            login: true,
-            admin: false
+            login: true
           }
         },
         {
@@ -65,8 +70,7 @@ const router = createRouter({
           component: () => import('../views/ProfileView.vue'),
           meta: {
             title: `${mainTitle} | 個人資訊`,
-            login: true,
-            admin: false
+            login: true
           }
         },
         {
@@ -75,8 +79,7 @@ const router = createRouter({
           component: () => import('../views/OrderView.vue'),
           meta: {
             title: `${mainTitle} | 我的訂單`,
-            login: true,
-            admin: false
+            login: true
           }
         }
       ]
@@ -87,8 +90,7 @@ const router = createRouter({
       component: () => import('../views/NotFound.vue'),
       meta: {
         title: `${mainTitle} | 404`,
-        login: false,
-        admin: false
+        login: false
       }
     },
     {

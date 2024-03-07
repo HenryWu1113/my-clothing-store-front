@@ -13,6 +13,5 @@ const app = createApp(App)
 
 app.use(createPinia().use(piniaPluginPersistedstate))
 app.use(router)
-app.use(router)
 app.use(naive)
 app.mount('#app')
