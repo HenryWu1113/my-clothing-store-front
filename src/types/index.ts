@@ -20,3 +20,23 @@ export interface IProduct {
   updatedAt: string
   _id: string
 }
+
+/**
+ * 穿搭資料結構格式
+ */
+export interface IOutfit {
+  _id: string
+  outfitName: string
+  description: string
+  clerk: string
+  images: string[]
+  products: {
+    product: string
+    color: string
+    size: string
+    _id: string
+  }
+  show: boolean
+  createdAt: string
+  updatedAt: string
+}

@@ -29,7 +29,7 @@ export const useUserStore = defineStore(
     async function login(form: { email: string; password: string }) {
       const { data } = await api().post('/users/login', form)
       console.log(data)
-      router.push('/')
+      // router.push('/')
       token.value = data.result.token
       getUser()
     }
@@ -65,6 +65,16 @@ export const useUserStore = defineStore(
       const { data } = await api('auth').get('/users/favorite')
       favorites.value = data.result.map((item: any) => item._id)
       return data
+    }
+
+    async function addCart(cartItem: {
+      product: string
+      quantity: number
+      color: string
+      size: string
+    }) {
+      const { data } = await api('auth').post('/users/cart', cartItem)
+      cart.value = data.result
     }
 
     async function logout() {
@@ -113,6 +123,7 @@ export const useUserStore = defineStore(
       getUser,
       editFav,
       getFav,
+      addCart,
       logout,
       resetPiniaVal
     }

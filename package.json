@@ -19,6 +19,7 @@
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "query-string": "^8.2.0",
+    "swiper": "^11.0.7",
     "validator": "^13.11.0",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
