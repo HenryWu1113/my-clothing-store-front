@@ -47,6 +47,24 @@ const router = createRouter({
           }
         },
         {
+          path: 'outfits',
+          name: 'outfits',
+          component: () => import('../views/OutfitsView.vue'),
+          meta: {
+            title: `${mainTitle} | 穿搭`,
+            login: false
+          }
+        },
+        {
+          path: 'outfit/:id',
+          name: 'outfit',
+          component: () => import('../views/OutfitView.vue'),
+          meta: {
+            title: `${mainTitle} | 個別穿搭`,
+            login: false
+          }
+        },
+        {
           path: 'favorite',
           name: 'favorite',
           component: () => import('../views/FavoriteView.vue'),

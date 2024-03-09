@@ -8,6 +8,7 @@ export const useUserStore = defineStore(
   'user',
   () => {
     // state
+    const userId: Ref<string> = ref('')
     const token: Ref<string> = ref('')
     const email: Ref<string> = ref('')
     const address: Ref<string> = ref('')
@@ -39,6 +40,7 @@ export const useUserStore = defineStore(
       try {
         const { data } = await api('auth').get('/users')
         console.log(data)
+        userId.value = data.result._id
         email.value = data.result.email
         address.value = data.result.address ?? ''
         cellphone.value = data.result.cellphone ?? ''
@@ -91,6 +93,7 @@ export const useUserStore = defineStore(
 
     /** 初始 useUserStore 值 */
     const resetPiniaVal = () => {
+      userId.value = ''
       token.value = ''
       email.value = ''
       address.value = ''
@@ -106,6 +109,7 @@ export const useUserStore = defineStore(
     }
 
     return {
+      userId,
       token,
       email,
       address,

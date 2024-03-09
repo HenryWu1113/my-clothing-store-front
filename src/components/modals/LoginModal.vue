@@ -206,6 +206,7 @@ const rules = {
   }
 }
 
+/** 跳窗加 class 變更動畫 */
 function addCloseClass() {
   const modal: HTMLElement = document.querySelector('.modal')!
   if (!modal) return
