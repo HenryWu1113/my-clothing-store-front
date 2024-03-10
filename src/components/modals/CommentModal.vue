@@ -37,6 +37,8 @@
                 @update:value="scoreOnUpdate"
               />
               <n-input
+                maxlength="20"
+                show-count
                 v-model:value="commentForm.description"
                 type="textarea"
                 placeholder="請輸入商品評論"
@@ -47,13 +49,16 @@
                 <label for="commentImgUpload" class="btn">
                   {{ commentForm.previewImages.length === 0 ? '新增照片' : '編輯照片' }}
                 </label>
-                <input
-                  id="commentImgUpload"
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  @change="() => {}"
-                />
+                <InputImage id="commentImgUpload" multiple @update-multiple="imageUpdate" />
+              </div>
+              <div class="preview-img-wrap">
+                <n-image-group>
+                  <n-image
+                    v-for="imgsrc in commentForm.previewImages"
+                    :key="imgsrc"
+                    :src="imgsrc"
+                  />
+                </n-image-group>
               </div>
             </div>
             <div class="submit-btns">
@@ -188,25 +193,40 @@
         display: flex;
         flex-direction: column;
         padding-top: 1.5rem;
+        gap: 10px;
         .add-btn {
           display: flex;
           justify-content: center;
           .btn {
             cursor: pointer;
             font-size: 14px;
-            color: $text-color;
+            color: $info;
             padding: 0.3rem 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid $text-color;
+            border: 1px solid $info;
             border-radius: 100px;
             &:hover {
               opacity: 0.9;
             }
           }
-          > input[type='file'] {
-            display: none;
+        }
+        .preview-img-wrap {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          justify-content: center;
+          :deep(.n-image) {
+            > img {
+              width: 150px !important;
+              height: 150px !important;
+              object-fit: cover !important;
+              @include md {
+                width: 100px !important;
+                height: 100px !important;
+              }
+            }
           }
         }
       }
@@ -214,6 +234,7 @@
         display: flex;
         justify-content: flex-end;
         gap: 1rem;
+        padding-top: 0.5rem;
       }
     }
 
@@ -256,9 +277,12 @@ import { useMessage } from 'naive-ui'
 import type { IRating } from '@/types'
 import { isEmail, isMobilePhone } from 'validator'
 import { api } from '@/plugins/axios'
+import { compareObjects, timeFromNow } from '@/composables'
+
+import InputImage from '../InputImage.vue'
 
 const { isOpen } = storeToRefs(useCommentModalStore())
-const { avatar, name, usreId } = storeToRefs(useUserStore())
+const { avatar, name } = storeToRefs(useUserStore())
 const message = useMessage()
 const commentModal = useCommentModalStore()
 
@@ -322,11 +346,12 @@ async function sendComment() {
   try {
     commentForm.value.loading = true
     // 新增
-    if (Object.keys(props.myRating).length === 0) {
+    if (compareObjects(props.myRating, {})) {
       await api('auth').post('/ratings', fd)
     } else {
       // 修改
       // 多傳了商品的 id 應該沒關係
+      // @ts-ignore
       await api('auth').patch(`/ratings/edit/${props.myRating._id}`, fd)
     }
     emit('update')
@@ -342,13 +367,27 @@ async function sendComment() {
 /** 取的我的評論(如果有的話去改 commentForm) */
 function getMyComment() {
   console.log(props.myRating)
-  if (Object.keys(props.myRating).length === 0) return
-  // @ts-ignore
-  commentForm.value.score = props.myRating.score
-  // @ts-ignore
-  commentForm.value.description = props.myRating.description
-  // @ts-ignore
-  commentForm.value.previewImages = props.myRating.images
+  if (compareObjects(props.myRating, {})) {
+    // @ts-ignore
+    commentForm.value.score = 0
+    // @ts-ignore
+    commentForm.value.description = ''
+    // @ts-ignore
+    commentForm.value.previewImages = []
+  } else {
+    // @ts-ignore
+    commentForm.value.score = props.myRating.score
+    // @ts-ignore
+    commentForm.value.description = props.myRating.description
+    // @ts-ignore
+    commentForm.value.previewImages = props.myRating.images
+  }
+}
+
+function imageUpdate(obj: { images: FileList; previewImages: string[] }) {
+  console.log(obj)
+  commentForm.value.images = obj.images
+  commentForm.value.previewImages = obj.previewImages
 }
 
 // 打開評論視窗確認是否有評論過

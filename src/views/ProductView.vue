@@ -84,7 +84,7 @@
       </swiper>
     </div>
     <div class="product-info-wrap">
-      <n-tabs type="segment" animated default-value="productRating">
+      <n-tabs type="segment" animated default-value="productInfo">
         <n-tab-pane name="productInfo" tab="商品資訊">
           <div class="product-description-wrap">
             <div>
@@ -124,9 +124,49 @@
                 <div class="comment-amount">{{ ratings.length }} 篇評論</div>
               </div>
               <div>
+                <div v-if="!compareObjects(myRating, {})" class="my-comment-wrap">
+                  <div class="user-info">
+                    <div class="avatar">
+                      <img :src="myRating.user.avatar" />
+                    </div>
+                    <div class="user-name">
+                      <p>{{ myRating.user.name ?? `使用者 ${myRating.user._id}` }}</p>
+                    </div>
+                    <n-dropdown
+                      trigger="click"
+                      placement="left"
+                      :options="[
+                        {
+                          label: '刪除評論',
+                          key: 'deleteComment'
+                        }
+                      ]"
+                      @select="clickDropdown"
+                    >
+                      <n-icon :component="EllipsisVerticalSharp"></n-icon>
+                    </n-dropdown>
+                  </div>
+                  <div class="user-rating">
+                    <n-rate size="large" readonly :title="myRating.score" :value="myRating.score" />
+                    <p>{{ timeFromNow(myRating.createdAt) }}</p>
+                    <div class="comment">{{ myRating.description }}</div>
+                    <div class="preview-img-wrap">
+                      <n-image-group>
+                        <n-image v-for="imgsrc in myRating.images" :key="imgsrc" :src="imgsrc" />
+                      </n-image-group>
+                    </div>
+                  </div>
+
+                  <n-button size="large" round ghost @click="commentModal.onOpen()">
+                    <template #icon>
+                      <n-icon :component="Pencil"> </n-icon>
+                    </template>
+                    {{ compareObjects(myRating, {}) ? '新增評論' : '編輯評論' }}
+                  </n-button>
+                </div>
                 <n-button
                   size="large"
-                  v-if="true"
+                  v-else
                   round
                   type="warning"
                   ghost
@@ -135,7 +175,7 @@
                   <template #icon>
                     <n-icon :component="Pencil"> </n-icon>
                   </template>
-                  {{ Object.keys(myRating).length === 0 ? '新增評論' : '編輯評論' }}
+                  {{ compareObjects(myRating, {}) ? '新增評論' : '編輯評論' }}
                 </n-button>
                 <CommentModal
                   :productName="product.name"
@@ -143,6 +183,18 @@
                   :myRating="myRating"
                   @update="getRatings()"
                 />
+              </div>
+            </div>
+            <div class="rating-list-wrap">
+              <div class="rating-filter-wrap"></div>
+              <div class="rating-comment-wrap">
+                <CommentCard
+                  v-for="rating in ratings"
+                  :key="rating._id"
+                  :rating="rating"
+                  @update="getRatings()"
+                />
+                <div v-if="ratings.length === 0" class="no-comment">暫無評論</div>
               </div>
             </div>
           </div>
@@ -368,10 +420,10 @@
             > div {
               // width: 50%;
               &:nth-child(1) {
-                width: 37.5%;
+                width: 25%;
                 display: flex;
                 flex-direction: column;
-                gap: 10px;
+                gap: 5px;
                 > div {
                   display: flex;
                   align-items: center;
@@ -383,7 +435,7 @@
                   }
                   .rating-bar {
                     width: calc(100% - 30px);
-                    height: 1rem;
+                    height: 0.8rem;
                     border-radius: 1rem;
                     position: relative;
                     background: $border-color;
@@ -391,7 +443,7 @@
                       position: absolute;
                       left: 0;
                       top: 0;
-                      height: 1rem;
+                      height: 100%;
                       border-radius: 1rem;
                       background: $loading-bar-color;
                       &:hover {
@@ -413,13 +465,111 @@
                 .comment-amount {
                   font-size: 1rem;
                 }
-                border-right: 2px solid $border-color;
+                // border-right: 2px solid $border-color;
               }
               &:nth-child(3) {
-                width: 37.5%;
+                width: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                gap: 10px;
+                .my-comment-wrap {
+                  display: flex;
+                  flex-direction: column;
+                  margin-left: 1.5rem;
+                  height: 100%;
+                  border: 2px solid $border-color;
+                  background: $border-color;
+                  border-radius: 5px;
+                  width: calc(100% - 1.5rem);
+                  padding: 1rem;
+                  gap: 10px;
+                  .user-info {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                    .avatar {
+                      width: 50px;
+                      height: 50px;
+                      border-radius: 50%;
+                      overflow: hidden;
+                      > img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                      }
+                    }
+                    .user-name {
+                      display: flex;
+                      flex-direction: column;
+                      gap: 5px;
+                      color: $text-color2;
+                      > p {
+                        font-size: 1.2rem;
+                      }
+                    }
+                    .n-icon {
+                      margin-left: auto;
+                      cursor: pointer;
+                      font-size: 20px;
+                      :hover {
+                        opacity: 0.9;
+                      }
+                    }
+                  }
+
+                  .user-rating {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    margin-bottom: auto;
+                    .comment {
+                      font-size: 1rem;
+                    }
+                    .preview-img-wrap {
+                      display: flex;
+                      align-items: center;
+                      gap: 10px;
+                      :deep(.n-image) {
+                        > img {
+                          width: 100px !important;
+                          height: 100px !important;
+                          object-fit: cover !important;
+                          border-radius: 3px;
+                          // @include md {
+                          //   width: 100px !important;
+                          //   height: 100px !important;
+                          // }
+                        }
+                      }
+                    }
+                  }
+
+                  .n-button {
+                    align-self: flex-end;
+                  }
+                }
+              }
+            }
+          }
+          .rating-list-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 2rem;
+            .rating-filter-wrap {
+              display: none;
+            }
+            .rating-comment-wrap {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+              .no-comment {
+                padding-top: 2rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2rem;
               }
             }
           }
@@ -434,13 +584,13 @@
 import { ref, reactive, computed, watch, type Ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { useMessage, useLoadingBar } from 'naive-ui'
+import { useMessage, useLoadingBar, useDialog } from 'naive-ui'
 import { api } from '@/plugins/axios'
 import type { IProduct, IOutfit, IRating } from '@/types'
-import { numberToCommaString } from '@/composables'
+import { numberToCommaString, compareObjects, timeFromNow } from '@/composables'
 import { useUserStore } from '@/stores/user'
 import { useCommentModalStore } from '@/stores/useCommentModal'
-import { ArrowUndoOutline, Pencil } from '@vicons/ionicons5'
+import { ArrowUndoOutline, Pencil, EllipsisVerticalSharp } from '@vicons/ionicons5'
 
 import { Swiper, SwiperSlide } from 'swiper/vue'
 // Import Swiper styles
@@ -450,6 +600,7 @@ import 'swiper/css/navigation'
 import { Pagination, Navigation } from 'swiper/modules'
 
 import CommentModal from '@/components/modals/CommentModal.vue'
+import CommentCard from '@/components/cards/CommentCard.vue'
 
 const modules = [Pagination, Navigation]
 
@@ -458,6 +609,7 @@ const { userId } = storeToRefs(useUserStore())
 const user = useUserStore()
 const commentModal = useCommentModalStore()
 const message = useMessage()
+const dialog = useDialog()
 const loadingBar = useLoadingBar()
 const route = useRoute()
 const router = useRouter()
@@ -504,7 +656,8 @@ const ratingsBarsInfo: Ref<{ score: number; width: string }[]> = ref(
 )
 
 /** 我的評分 */
-const myRating: Ref<IRating | {}> = ref({})
+// @ts-ignore
+const myRating: Ref<IRating> = ref({})
 
 const productForm = ref({
   quantity: 1,
@@ -528,9 +681,9 @@ async function getProduct() {
     product.value = data.result
     productForm.value.selectedImage = product.value.images[0]
     loadingBar.finish()
-  } catch (error) {
+  } catch (error: any) {
     loadingBar.error()
-    message.error('找不到商品')
+    message.error(error.isAxiosError ? error.response.data.message : error.message)
     console.log(error)
     router.go(-1)
   }
@@ -540,24 +693,39 @@ async function getRatings() {
   try {
     const { data } = await api().get(`/ratings/product/${route.params.id}`)
     console.log('商品所有評分', data)
-    ratings.value = data.result
+    ratings.value = data.result.map((rating: any) => {
+      return {
+        ...rating,
+        user: {
+          ...rating.user,
+          avatar: rating.user.avatar
+            ? rating.user.avatar
+            : `https://source.boringavatars.com/beam/160/${rating.user._id}`
+        }
+      }
+    })
 
     ratingsBarsInfo.value = ratingsBarsInfo.value.map((item) => {
+      const calWidth =
+        (ratings.value.filter((rating) => rating.score === item.score).length /
+          ratings.value.length) *
+        100
+
       return {
         ...item,
-        width:
-          (ratings.value.filter((rating) => rating.score === item.score).length /
-            ratings.value.length) *
-          100
+        width: isNaN(calWidth) ? '0' : String(calWidth)
       }
     })
 
     const idx = ratings.value.findIndex((rating) => rating.user._id === userId.value)
     console.log(userId.value)
-    if (idx === -1) return
+    if (idx === -1) {
+      // @ts-ignore
+      return (myRating.value = {})
+    }
     myRating.value = ratings.value[idx]
-  } catch (error) {
-    message.error('找不到商品')
+  } catch (error: any) {
+    message.error(error.isAxiosError ? error.response.data.message : error.message)
     console.log(error)
     router.go(-1)
   }
@@ -568,8 +736,8 @@ async function getRelatedOutfits() {
     const { data } = await api().get(`/outfits/related/${route.params.id}`)
     console.log('相關穿搭', data)
     outfits.value = data.result
-  } catch (error) {
-    message.error('找不到商品')
+  } catch (error: any) {
+    message.error(error.isAxiosError ? error.response.data.message : error.message)
     console.log(error)
     router.go(-1)
   }
@@ -611,12 +779,43 @@ async function addCart() {
   productForm.value.loading = false
 }
 
+/** 刪除自己評論 */
+async function deleteComment() {
+  try {
+    await api('auth').delete(`/ratings/${myRating.value._id}`)
+    // 重取所有評分
+    await getRatings()
+    message.success('刪除成功')
+  } catch (error: any) {
+    message.error(error.isAxiosError ? error.response.data.message : error.message)
+  }
+}
+
+/**
+ * 點擊 dropdown
+ * @param key
+ */
+function clickDropdown(key: string | number) {
+  if (key === 'deleteComment') {
+    const d = dialog.warning({
+      title: '警告',
+      content: '確認刪除評論?',
+      positiveText: '確認',
+      negativeText: '取消',
+      onPositiveClick: () => {
+        d.loading = true
+        return deleteComment()
+      }
+    })
+  }
+}
+
 /** 平均評分 */
 const avgScore = computed(() => {
   const avg =
     ratings.value.reduce((acc: any, curr: any) => acc + curr.score, 0) / ratings.value.length
   if (isNaN(avg)) return 0.0
-  return parseFloat(avg)
+  return avg
 })
 
 watch(
@@ -629,4 +828,3 @@ watch(
   { immediate: true }
 )
 </script>
-@/stores/useCommentModal

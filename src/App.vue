@@ -9,6 +9,7 @@
         <n-dialog-provider>
           <n-back-top class="backTop" :right="20" :bottom="20" />
           <RouterView />
+          <FooterView />
         </n-dialog-provider>
       </n-message-provider>
     </n-loading-bar-provider>
@@ -24,6 +25,8 @@ import { darkTheme } from 'naive-ui'
 import type { NLocale, NDateLocale } from 'naive-ui'
 import { useUserStore } from '@/stores/user'
 import useTheme from '@/composables/useTheme'
+
+import FooterView from './components/FooterView.vue'
 
 const { isLight } = useTheme()
 const { getUser } = useUserStore()

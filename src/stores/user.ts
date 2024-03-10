@@ -47,7 +47,8 @@ export const useUserStore = defineStore(
         name.value = data.result.name ?? ''
         sex.value = data.result.sex ?? ''
         birthday.value = data.result.birthday ?? ''
-        avatar.value = data.result.avatar ?? ''
+        avatar.value =
+          data.result.avatar ?? `https://source.boringavatars.com/beam/160/${userId.value}`
         backgroundImg.value = data.result.backgroundImg ?? ''
         favorites.value = data.result.favorites
         cart.value = data.result.cart.length
