@@ -1,5 +1,5 @@
 <template>
-  <div class="product-page myContainer">
+  <div class="product-page myContainer min-h-screen">
     <div class="product-selection-wrap">
       <div class="product-imgs-wrap">
         <div class="secondary-img-wrap">
