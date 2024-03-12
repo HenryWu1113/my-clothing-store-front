@@ -1,22 +1,9 @@
 <template>
-  <div
-    ref="homePage"
-    :class="['home-page', 'min-h-screen', swiperInstance?.isEnd ? 'showScrollBar' : '']"
-    @wheel="onscroll"
-  >
-    <swiper
-      :direction="'vertical'"
-      :slidesPerView="1"
-      :mousewheel="true"
-      :pagination="{
-        clickable: true
-      }"
-      :modules="modules"
-      class="mySwiper"
-      ref="swiperDom"
-      @reachEnd="handleSwiperEnd"
-      @init="init"
-    >
+  <div ref="homePage" :class="['home-page', 'min-h-screen', swiperInstance?.isEnd ? 'showScrollBar' : '']"
+    @wheel="onscroll">
+    <swiper :direction="'vertical'" :slidesPerView="1" :mousewheel="true" :pagination="{
+    clickable: true
+  }" :modules="modules" class="mySwiper" ref="swiperDom" @reachEnd="handleSwiperEnd" @init="init">
       <swiper-slide>Slide 1</swiper-slide>
       <swiper-slide>Slide 2</swiper-slide>
       <swiper-slide>Slide 3</swiper-slide>
@@ -65,7 +52,7 @@
 </style>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Mousewheel, Pagination } from 'swiper/modules'
 import 'swiper/css/pagination'
@@ -96,10 +83,19 @@ function onscroll(e: WheelEvent) {
     body.style.overflow = 'auto'
     // console.log(body)
   } else if (swiperInstance.value.el.getBoundingClientRect().bottom === window.innerHeight) {
-    console.log(324)
     // 如果輪播圖的底的高度等於視窗底的高度且滾輪往上 啟用輪播圖 mousewheel 功能
     swiperInstance.value.mousewheel.enable()
     body.style.overflow = 'hidden'
   }
 }
+
+onMounted(() => {
+  const body: any = document.querySelector('body')
+  body.style.overflow = 'hidden'
+})
+
+onBeforeUnmount(() => {
+  const body: any = document.querySelector('body')
+  body.style.overflow = 'auto'
+})
 </script>
