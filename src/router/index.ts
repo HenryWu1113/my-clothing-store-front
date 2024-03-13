@@ -99,6 +99,24 @@ const router = createRouter({
             title: `${mainTitle} | 我的訂單`,
             login: true
           }
+        },
+        {
+          path: 'news',
+          name: 'AllNews',
+          component: () => import('../views/AllNewsView.vue'),
+          meta: {
+            title: `${mainTitle} | 最新消息`,
+            login: true
+          }
+        },
+        {
+          path: 'news/:id',
+          name: 'news',
+          component: () => import('../views/NewsView.vue'),
+          meta: {
+            title: `${mainTitle} | 最新消息`,
+            login: true
+          }
         }
       ]
     },

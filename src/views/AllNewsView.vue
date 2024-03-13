@@ -1,0 +1,7 @@
+<template>
+  <div class="myContainer min-h-screen">All newsView</div>
+</template>
+
+<style scoped lang="scss"></style>
+
+<script setup lang="ts"></script>

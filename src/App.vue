@@ -1,5 +1,9 @@
 <template>
-  <n-config-provider :locale="locale" :date-locale="dateLocale" :theme="isLight ? void 0 : darkTheme">
+  <n-config-provider
+    :locale="locale"
+    :date-locale="dateLocale"
+    :theme="isLight ? void 0 : darkTheme"
+  >
     <n-loading-bar-provider>
       <n-message-provider>
         <n-dialog-provider>
@@ -35,8 +39,12 @@ const dateLocale = ref(null as NDateLocale | null)
 
 getUser()
 
-watch(() => route.path, (n, o) => {
-  if (n === o) return
-  window.scrollTo({ top: 0 })
-}, { deep: true })
+watch(
+  () => route.path,
+  (n, o) => {
+    if (n === o) return
+    window.scrollTo({ top: 0 })
+  },
+  { deep: true }
+)
 </script>
