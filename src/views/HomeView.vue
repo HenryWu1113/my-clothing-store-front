@@ -68,6 +68,10 @@
             <n-icon class="big-icon" v-if="idx === 0" :component="BagCheckOutline"></n-icon>
             <n-icon class="big-icon" v-if="idx === 1" :component="PricetagsOutline"></n-icon>
             <n-icon class="big-icon" v-if="idx === 2" :component="StorefrontOutline"></n-icon>
+            <div class="date">
+              <n-icon :component="CalendarOutline"></n-icon>
+              <p>{{ formatTime(news.createdAt, true) }}</p>
+            </div>
             <n-icon class="arrow" :component="ArrowForwardCircleOutline"></n-icon>
           </div>
         </div>
@@ -213,6 +217,7 @@
         </n-collapse>
       </div>
     </div>
+    <DoorOpenLoader />
   </div>
 </template>
 
@@ -348,6 +353,12 @@
           .big-icon {
             font-size: 5rem;
           }
+          .date {
+            align-self: flex-start;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+          }
           .arrow {
             font-size: 2rem;
             position: absolute;
@@ -424,6 +435,7 @@ import { ref, reactive, onMounted, onBeforeUnmount } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Mousewheel, Pagination } from 'swiper/modules'
 import { homeCarousel } from '@/composables/settings/settings'
+import { formatTime } from '@/composables'
 import { useMessage } from 'naive-ui'
 import { api } from '@/plugins/axios'
 import type { INews } from '@/types'
@@ -433,11 +445,14 @@ import {
   StorefrontOutline,
   ArrowForwardCircleOutline,
   SparklesOutline,
-  SnowOutline
+  SnowOutline,
+  CalendarOutline
 } from '@vicons/ionicons5'
 
 import 'swiper/css/pagination'
 import 'swiper/css'
+
+import DoorOpenLoader from '@/components/DoorOpenLoader.vue'
 
 const message = useMessage()
 

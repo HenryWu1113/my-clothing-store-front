@@ -106,7 +106,7 @@ const router = createRouter({
           component: () => import('../views/AllNewsView.vue'),
           meta: {
             title: `${mainTitle} | 最新消息`,
-            login: true
+            login: false
           }
         },
         {
@@ -115,7 +115,7 @@ const router = createRouter({
           component: () => import('../views/NewsView.vue'),
           meta: {
             title: `${mainTitle} | 最新消息`,
-            login: true
+            login: false
           }
         }
       ]
