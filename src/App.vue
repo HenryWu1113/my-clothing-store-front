@@ -9,7 +9,6 @@
         <n-dialog-provider>
           <n-back-top class="backTop" :right="20" :bottom="20" />
           <RouterView />
-          <FooterView />
         </n-dialog-provider>
       </n-message-provider>
     </n-loading-bar-provider>
@@ -27,8 +26,6 @@ import { useUserStore } from '@/stores/user'
 import { useRoute } from 'vue-router'
 import useTheme from '@/composables/useTheme'
 import _ from 'lodash'
-
-import FooterView from './components/FooterView.vue'
 
 const route = useRoute()
 const { isLight } = useTheme()

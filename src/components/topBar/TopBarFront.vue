@@ -8,6 +8,7 @@
     <MunuBtns />
   </header>
   <RouterView />
+  <FooterView />
 </template>
 
 <style lang="scss" scoped>
@@ -35,6 +36,7 @@ import { storeToRefs } from 'pinia'
 import { useMessage } from 'naive-ui'
 import CategoriesBtns from './CategoriesBtns.vue'
 import MunuBtns from './MunuBtns.vue'
+import FooterView from '@/components/FooterView.vue'
 
 // interface $messageType {
 //   $message: any

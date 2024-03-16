@@ -1,6 +1,6 @@
 <template>
   <Teleport to="body">
-    <div class="door-open-loader">
+    <div :class="['door-open-loader', onOpen ? '' : 'close']">
       <div class="loader"></div>
     </div>
   </Teleport>
@@ -18,6 +18,16 @@
   width: 100vw;
   height: 100vh;
   z-index: 10001;
+
+  &.close {
+    &::before,
+    &::after {
+      animation: bg-disappear 0.9s linear forwards;
+    }
+    .loader {
+      animation: loader-disappear 0.5s linear forwards;
+    }
+  }
   @keyframes bg-disappear {
     100% {
       width: 0;
@@ -32,9 +42,8 @@
     width: 60%;
     height: 100%;
     background-color: #7b68ee;
-    -webkit-transition: 0.9s;
-    transition: 0.9s;
-    animation: bg-disappear 0.9s linear var(--huan-animation-delay) forwards;
+    // -webkit-transition: 0.9s;
+    // animation: bg-disappear 0.9s linear var(--huan-animation-delay) forwards;
   }
 
   &::before {
@@ -52,7 +61,7 @@
     top: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
-    animation: loader-disappear 0.5s linear var(--huan-animation-delay) forwards;
+    // animation: loader-disappear 0.5s linear var(--huan-animation-delay) forwards;
     @keyframes loader-disappear {
       100% {
         opacity: 0;
@@ -120,4 +129,11 @@ import {
   SnowOutline,
   CalendarOutline
 } from '@vicons/ionicons5'
+
+const props = defineProps({
+  onOpen: {
+    type: Boolean,
+    default: true
+  }
+})
 </script>

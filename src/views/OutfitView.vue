@@ -1,5 +1,5 @@
 <template>
-  <div class="myContainer">single outfit</div>
+  <div class="myContainer min-h-screen">single outfit</div>
 </template>
 
 <style scoped lang="scss"></style>

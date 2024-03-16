@@ -217,7 +217,7 @@
         </n-collapse>
       </div>
     </div>
-    <DoorOpenLoader />
+    <DoorOpenLoader :onOpen="false" />
   </div>
 </template>
 
@@ -476,8 +476,9 @@ function onscroll(e: WheelEvent) {
   const body: any = document.querySelector('body')
   if (swiperInstance.value.isEnd && e.deltaY > 0) {
     swiperInstance.value.mousewheel.disable()
-    body.style.overflow = 'auto'
-    // console.log(body)
+    setTimeout(() => {
+      body.style.overflow = 'auto'
+    }, 300)
   } else if (swiperInstance.value.el.getBoundingClientRect().bottom === window.innerHeight) {
     // 如果輪播圖的底的高度等於視窗底的高度且滾輪往上 啟用輪播圖 mousewheel 功能
     swiperInstance.value.mousewheel.enable()

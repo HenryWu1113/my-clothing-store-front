@@ -1,5 +1,5 @@
 <template>
-  <div class="product-card">
+  <div class="product-card" :style="amimationDelay">
     <div class="product-img-wrap">
       <img :src="product.images[0]" alt="" />
     </div>
@@ -32,18 +32,29 @@
 <style scoped lang="scss">
 @import '@/styles/styles';
 .product-card {
+  --haun-animation-delay: 0s;
+
   border-radius: 10px;
-  // border: 1px solid $border-color;
   box-shadow: 0px 0px 5px $border-color;
   overflow: hidden;
   cursor: pointer;
+  opacity: 0;
+  animation: showEffect 0.5s var(--haun-animation-delay) linear forwards;
+
   .product-img-wrap {
     position: relative;
     height: calc(100% - 160px);
+    overflow: hidden;
+    &:hover {
+      > img {
+        transform: scale(1.1);
+      }
+    }
     > img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: 0.3s;
     }
   }
   .product-info {
@@ -131,6 +142,10 @@ const props = defineProps({
   product: {
     type: Object as () => IProduct,
     required: true
+  },
+  idx: {
+    type: Number,
+    required: true
   }
 })
 
@@ -156,6 +171,10 @@ const rateValue = computed(() => {
 
 const isFavorite = computed(() => {
   return favorites.value.includes(props.product._id)
+})
+
+const amimationDelay = computed(() => {
+  return { animationDelay: `${props.idx * 0.1}s` }
 })
 
 console.log(props.product)

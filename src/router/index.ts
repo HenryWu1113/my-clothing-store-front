@@ -31,9 +31,18 @@ const router = createRouter({
         {
           path: 'category',
           name: 'category',
-          component: () => import('../views/ProductsView.vue'),
+          component: () => import('../views/CategoryView.vue'),
           meta: {
             title: `${mainTitle} | 分類`,
+            login: false
+          }
+        },
+        {
+          path: 'products',
+          name: 'products',
+          component: () => import('../views/ProductsView.vue'),
+          meta: {
+            title: `${mainTitle} | 商品`,
             login: false
           }
         },
@@ -61,6 +70,24 @@ const router = createRouter({
           component: () => import('../views/OutfitView.vue'),
           meta: {
             title: `${mainTitle} | 個別穿搭`,
+            login: false
+          }
+        },
+        {
+          path: 'stores',
+          name: 'stores',
+          component: () => import('../views/StoresView.vue'),
+          meta: {
+            title: `${mainTitle} | 店鋪`,
+            login: false
+          }
+        },
+        {
+          path: 'aboutus',
+          name: 'aboutus',
+          component: () => import('../views/AboutUs.vue'),
+          meta: {
+            title: `${mainTitle} | 關於我們`,
             login: false
           }
         },

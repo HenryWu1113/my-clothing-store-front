@@ -1,7 +1,7 @@
 <template>
   <div class="products-view myContainer min-h-screen">
-    <div class="category-top">
-      <img src="/src/assets/images/categoryTopImage.jpg" alt="" />
+    <div class="product-top">
+      <img src="../assets/images/categoryTopImage.jpg" alt="" />
     </div>
     <div class="slogan">精選商品分類</div>
     <div class="product-filter-wrap">
@@ -36,7 +36,7 @@
           class="query-input"
           v-model:value="keyword"
           type="text"
-          placeholder="Basic Input"
+          placeholder="請輸入商品名"
           clearable
         />
         <n-button @click="advanceSearch()">確認</n-button>
@@ -53,8 +53,9 @@
       </template>
       <ProductCard
         v-else-if="!loading && products.length > 0"
-        v-for="product in products"
+        v-for="(product, idx) in products"
         :key="product._id"
+        :idx="idx"
         :product="product"
         @click="$router.push(`product/${product._id}`)"
       />
@@ -66,7 +67,7 @@
 @import '@/styles/styles';
 
 .products-view {
-  > .category-top {
+  > .product-top {
     > img {
       width: 100%;
     }
@@ -250,7 +251,7 @@ function selectSort(value: string) {
     sort: selectSortValue.value
   }
   const str = queryString.stringify(queryObj)
-  router.push(`/category?${str}`)
+  router.push(`/products?${str}`)
 }
 
 /**
@@ -275,7 +276,7 @@ function advanceSearch() {
     delete queryObj.lte
   }
   const str = queryString.stringify(queryObj)
-  router.push(`/category?${str}`)
+  router.push(`/products?${str}`)
 }
 
 function resetFilter() {
