@@ -32,14 +32,11 @@
 <style scoped lang="scss">
 @import '@/styles/styles';
 .product-card {
-  --haun-animation-delay: 0s;
-
   border-radius: 10px;
   box-shadow: 0px 0px 5px $border-color;
   overflow: hidden;
   cursor: pointer;
-  opacity: 0;
-  animation: showEffect 0.5s var(--haun-animation-delay) linear forwards;
+  @extend %AshowEffect;
 
   .product-img-wrap {
     position: relative;

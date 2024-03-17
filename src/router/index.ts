@@ -78,7 +78,16 @@ const router = createRouter({
           name: 'stores',
           component: () => import('../views/StoresView.vue'),
           meta: {
-            title: `${mainTitle} | 店鋪`,
+            title: `${mainTitle} | 店鋪總覽`,
+            login: false
+          }
+        },
+        {
+          path: 'store/:id',
+          name: 'store',
+          component: () => import('../views/StoreView.vue'),
+          meta: {
+            title: `${mainTitle} | 店鋪資訊`,
             login: false
           }
         },

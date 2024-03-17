@@ -37,6 +37,9 @@
             </div>
           </div>
         </div>
+        <div class="go-back-btn">
+          <n-button type="info" ghost @click="$router.push('/news')">回到最新消息總覽</n-button>
+        </div>
       </div>
     </div>
     <DoorOpenLoader :onOpen="!isLoaded" />
@@ -52,8 +55,8 @@
     display: flex;
     gap: 4rem;
     .main-info-wrap {
-      width: calc(100% - 600px - 4rem);
-      padding-left: 10rem;
+      width: calc(100% - 450px - 4rem);
+      // padding-left: 10rem;
       display: flex;
       flex-direction: column;
       gap: 1rem;
@@ -86,8 +89,8 @@
       }
     }
     .other-news-lists-wrap {
-      width: 600px;
-      padding-right: 10rem;
+      width: 450px;
+      // padding-right: 10rem;
       display: flex;
       flex-direction: column;
       > .title {
@@ -142,6 +145,14 @@
             }
           }
         }
+      }
+    }
+    .go-back-btn {
+      margin-top: 1rem;
+      > .n-button {
+        width: 100%;
+        --n-font-size: 1rem !important;
+        --n-height: 40px !important;
       }
     }
   }

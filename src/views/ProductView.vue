@@ -5,9 +5,10 @@
         <div class="secondary-img-wrap">
           <div
             class="img-wrap"
-            v-for="imgSrc in product.images"
+            v-for="(imgSrc, idx) in product.images"
             :key="imgSrc"
             @click="productForm.selectedImage = imgSrc"
+            :style="amimationDelay(idx)"
           >
             <img :src="imgSrc" />
           </div>
@@ -229,6 +230,7 @@
           width: 150px;
           height: 150px;
           cursor: pointer;
+          @extend %AshowEffect;
           > img {
             width: 100%;
             height: 100%;
@@ -808,6 +810,10 @@ function clickDropdown(key: string | number) {
       }
     })
   }
+}
+
+function amimationDelay(idx: number) {
+  return { animationDelay: `${idx * 0.1}s` }
 }
 
 /** 平均評分 */

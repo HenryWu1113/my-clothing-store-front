@@ -22,7 +22,6 @@
 
 .news-list {
   --huan-padding: 0 1.5rem;
-  --haun-animation-delay: 0s;
 
   width: calc((100% - 2rem) / 3);
   box-shadow: 5px 5px 15px $border-color;
@@ -32,8 +31,7 @@
   flex-direction: column;
   gap: 0.5rem;
   padding-bottom: 1rem;
-  opacity: 0;
-  animation: showEffect 0.5s var(--haun-animation-delay) linear forwards;
+  @extend %AshowEffect;
   .img-wrap {
     width: 100%;
     height: 300px;

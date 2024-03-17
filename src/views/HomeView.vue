@@ -64,7 +64,11 @@
             :key="news._id"
             @click="$router.push(`/news/${news._id}`)"
           >
-            <div class="title">{{ news.title }}</div>
+            <div class="title">
+              <p>
+                {{ news.title }}
+              </p>
+            </div>
             <n-icon class="big-icon" v-if="idx === 0" :component="BagCheckOutline"></n-icon>
             <n-icon class="big-icon" v-if="idx === 1" :component="PricetagsOutline"></n-icon>
             <n-icon class="big-icon" v-if="idx === 2" :component="StorefrontOutline"></n-icon>
@@ -313,8 +317,7 @@
         align-items: center;
         gap: 2rem;
         .list-wrap {
-          width: calc((100% - 1rem) / 3);
-          // height: 150px;
+          width: calc((100% - 4rem) / 3) !important;
           display: flex;
           color: $text-color2;
           font-size: 1rem;
@@ -345,10 +348,14 @@
           gap: 1rem;
           position: relative;
           .title {
+            width: 100%;
             font-size: 1.5rem;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
+            text-align: center;
+            > p {
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              overflow: hidden;
+            }
           }
           .big-icon {
             font-size: 5rem;

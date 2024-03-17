@@ -144,7 +144,7 @@
         width: calc((100% - 2rem) / 3);
       }
 
-      @include md {
+      @include lg {
         width: calc((100% - 1rem) / 2);
       }
 

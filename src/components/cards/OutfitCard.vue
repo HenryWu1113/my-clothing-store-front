@@ -8,12 +8,10 @@
 @import '@/styles/styles';
 
 .outfit-card {
-  --haun-animation-delay: 0s;
   border: 1px solid $border-color;
   cursor: pointer;
   overflow: hidden;
-  animation: showEffect 0.5s var(--haun-animation-delay) linear forwards;
-  opacity: 0;
+  @extend %AshowEffect;
   &:hover {
     > img {
       transform: scale(1.1);

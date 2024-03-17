@@ -26,14 +26,13 @@
     font-weight: bold;
     color: $text-color;
     border-bottom: 1px solid $border-color;
-    padding-bottom: 10px;
+    padding: 2rem 0 10px 0;
   }
   .outfits-wrap {
     padding: 2rem 0;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-
     > div {
       width: calc((100% - 4rem) / 5);
       aspect-ratio: 2/3 !important;

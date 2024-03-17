@@ -13,17 +13,17 @@ export const menuSelection = [
   {
     key: 'outfits',
     text: '穿搭',
-    route: 'outfits'
+    route: '/outfits'
   },
   {
     key: 'stores',
     text: '店鋪',
-    route: 'stores'
+    route: '/stores'
   },
   {
     key: 'aboutUs',
     text: '關於我們',
-    route: 'aboutus'
+    route: '/aboutus'
   }
 ]
 
