@@ -3,10 +3,14 @@
     <div class="title">店鋪資訊</div>
     <div class="stores-wrap">
       <template v-if="loading">
-        <n-skeleton v-for="item in Array.from({ length: 20 }, (_, idx) => idx)" :key="item" :sharp="false"
-          size="medium" />
-        <StoreCard v-for="(store, idx) in stores" :key="store._id" :store="store" :idx="idx" />
+        <n-skeleton
+          v-for="item in Array.from({ length: 20 }, (_, idx) => idx)"
+          :key="item"
+          :sharp="false"
+          size="medium"
+        />
       </template>
+      <StoreCard v-for="(store, idx) in stores" :key="store._id" :store="store" :idx="idx" />
     </div>
   </div>
 </template>
@@ -33,19 +37,20 @@
     flex-wrap: wrap;
     gap: 1rem;
 
-    >div {
-      width: calc((100% - 2rem) / 3);
-      aspect-ratio: 4/3 !important;
+    > div {
+      width: calc((100% - 2rem) / 5);
+      // aspect-ratio: 4/3 !important;
+      height: 200px;
 
-      &.store-card {
-        background: yellow;
+      @include xxxxl {
+        width: calc((100% - 1rem) / 3);
       }
 
       @include xxxl {
         width: calc((100% - 1rem) / 2);
       }
 
-      @include lg {
+      @include sm {
         width: 100%;
       }
 

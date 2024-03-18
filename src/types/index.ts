@@ -113,5 +113,11 @@ export interface IStore {
     _id: string
     key: string
     name: string
+    gender: string
+    categoryType: string
+    updatedAt: string
+    createdAt: string
   }[]
+  updatedAt: string
+  createdAt: string
 }
