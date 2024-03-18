@@ -31,18 +31,9 @@
               </div>
             </div>
             <div class="user-rating">
-              <n-rate
-                size="large"
-                :default-value="commentForm.score"
-                @update:value="scoreOnUpdate"
-              />
-              <n-input
-                maxlength="20"
-                show-count
-                v-model:value="commentForm.description"
-                type="textarea"
-                placeholder="請輸入商品評論"
-              />
+              <n-rate size="large" :default-value="commentForm.score" @update:value="scoreOnUpdate" />
+              <n-input maxlength="20" show-count v-model:value="commentForm.description" type="textarea"
+                placeholder="請輸入商品評論" />
             </div>
             <div class="img-wrap">
               <div class="add-btn">
@@ -53,11 +44,7 @@
               </div>
               <div class="preview-img-wrap">
                 <n-image-group>
-                  <n-image
-                    v-for="imgsrc in commentForm.previewImages"
-                    :key="imgsrc"
-                    :src="imgsrc"
-                  />
+                  <n-image v-for="imgsrc in commentForm.previewImages" :key="imgsrc" :src="imgsrc" />
                 </n-image-group>
               </div>
             </div>
@@ -78,6 +65,7 @@
 
 <style lang="scss" scoped>
 @import '@/styles/styles';
+
 .modal-mask {
   width: 100vw;
   height: 100vh;
@@ -86,6 +74,7 @@
   left: 0;
   top: 0;
   z-index: 10000;
+
   .modal {
     position: absolute;
     left: 50%;
@@ -95,28 +84,34 @@
     border-radius: 10px;
     width: 600px;
     animation: onOpen 0.5s ease forwards;
+
     &.close {
       animation: onClose 0.5s ease forwards;
     }
+
     @keyframes onOpen {
       0% {
         top: 70%;
         opacity: 0;
       }
     }
+
     @keyframes onClose {
       100% {
         top: 70%;
         opacity: 0;
       }
     }
+
     @include md {
       width: 500px;
     }
+
     @include sm {
       width: 100%;
       height: 100%;
     }
+
     .modal-title {
       position: relative;
       display: flex;
@@ -126,13 +121,15 @@
       font-size: 20px;
       font-weight: bold;
       color: $text-color2;
-      > p {
+
+      >p {
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
       }
-      > .n-icon {
+
+      >.n-icon {
         cursor: pointer;
       }
     }
@@ -142,32 +139,39 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+
       .user-info {
         display: flex;
         align-items: center;
         gap: 1rem;
+
         .avatar {
           width: 50px;
           height: 50px;
           border-radius: 50%;
           overflow: hidden;
-          > img {
+
+          >img {
             width: 100%;
             height: 100%;
             object-fit: cover;
           }
         }
+
         .user-name {
           display: flex;
           flex-direction: column;
           gap: 5px;
           color: $text-color2;
-          > p {
+
+          >p {
             font-size: 1.2rem;
           }
-          > div {
+
+          >div {
             display: flex;
             align-items: center;
+
             .n-icon {
               margin-left: 0.5rem;
               font-size: 1.2rem;
@@ -176,27 +180,33 @@
           }
         }
       }
+
       .user-rating {
         padding-top: 1rem;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 1rem;
+
         .n-rate {
           --n-item-size: 30px !important;
         }
+
         .n-input--textarea {
           --n-font-size: 1rem !important;
         }
       }
+
       .img-wrap {
         display: flex;
         flex-direction: column;
         padding-top: 1.5rem;
         gap: 10px;
+
         .add-btn {
           display: flex;
           justify-content: center;
+
           .btn {
             cursor: pointer;
             font-size: 14px;
@@ -207,21 +217,25 @@
             justify-content: center;
             border: 1px solid $info;
             border-radius: 100px;
+
             &:hover {
               opacity: 0.9;
             }
           }
         }
+
         .preview-img-wrap {
           display: flex;
           align-items: center;
           gap: 10px;
           justify-content: center;
+
           :deep(.n-image) {
-            > img {
+            >img {
               width: 150px !important;
               height: 150px !important;
               object-fit: cover !important;
+
               @include md {
                 width: 100px !important;
                 height: 100px !important;
@@ -230,6 +244,7 @@
           }
         }
       }
+
       .submit-btns {
         display: flex;
         justify-content: flex-end;
@@ -242,11 +257,13 @@
       color: $text-color;
       border-top: 1px solid $border-color;
       padding: 10px;
+
       .quick-login {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 1rem;
+
         .n-icon {
           font-size: 2rem;
           cursor: pointer;
@@ -256,7 +273,8 @@
       .goto-login {
         display: flex;
         justify-content: flex-end;
-        > p {
+
+        >p {
           font-size: 1rem;
           cursor: pointer;
         }

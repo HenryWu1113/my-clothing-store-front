@@ -3,12 +3,8 @@
     <div class="title">穿搭展示</div>
     <div class="outfits-wrap">
       <template v-if="loading">
-        <n-skeleton
-          v-for="item in Array.from({ length: 20 }, (_, idx) => idx)"
-          :key="item"
-          :sharp="false"
-          size="medium"
-        />
+        <n-skeleton v-for="item in Array.from({ length: 20 }, (_, idx) => idx)" :key="item" :sharp="false"
+          size="medium" />
       </template>
       <OutfitCard v-for="(outfit, idx) in outfits" :outfit="outfit" :idx="idx" :key="outfit._id" />
     </div>
@@ -17,10 +13,12 @@
 
 <style scoped lang="scss">
 @import '@/styles/styles';
+
 .outfits-page {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
   .title {
     font-size: 2rem;
     font-weight: bold;
@@ -28,12 +26,14 @@
     border-bottom: 1px solid $border-color;
     padding: 2rem 0 10px 0;
   }
+
   .outfits-wrap {
     padding: 2rem 0;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    > div {
+
+    >div {
       width: calc((100% - 4rem) / 5);
       aspect-ratio: 2/3 !important;
 
@@ -78,10 +78,7 @@ const loading = ref(false)
 
 const outfits = ref<IOutfit[]>([])
 
-/**
- * 取商品
- * @param queryObj
- */
+/** 取所有穿搭 */
 async function getOutfits() {
   loading.value = true
   try {

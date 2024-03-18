@@ -97,3 +97,21 @@ export interface ICategory {
   createdAt: string
   updatedAt: string
 }
+
+/**
+ * 店鋪資料結構格式
+ */
+export interface IStore {
+  _id: string
+  name: string
+  phone: string
+  address: string
+  position: string
+  googleMapAddress: string
+  openingTime: string
+  sellSeries: {
+    _id: string
+    key: string
+    name: string
+  }[]
+}
