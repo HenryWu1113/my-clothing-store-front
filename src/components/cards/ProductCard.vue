@@ -14,7 +14,12 @@
         </div>
       </div>
       <div class="product-name">{{ product.name }}</div>
-      <div class="product-price">NT. {{ numberToCommaString(product.price) }}</div>
+      <div class="product-price">
+        <p v-if="product.discountRate !== 0">
+          <del>NT$ {{ numberToCommaString(product.price) }}</del>
+        </p>
+        <p>NT$ {{ numberToCommaString(product.price * ((100 - product.discountRate) / 100)) }}</p>
+      </div>
       <div class="product-rate">
         <n-rate readonly :title="rateValue" allow-half :value="rateValue" />
         <p>({{ product.ratings.length }})</p>
@@ -98,6 +103,8 @@
       color: $text-color;
     }
     .product-price {
+      display: flex;
+      gap: 1rem;
       font-size: 1.2rem;
       color: $text-color;
     }

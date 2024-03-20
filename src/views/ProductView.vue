@@ -22,7 +22,12 @@
           <div v-for="tag in product.tags" :key="tag">#{{ tag }}</div>
         </div>
         <div class="product-name">{{ product.name }}</div>
-        <div class="product-price">NT$ {{ numberToCommaString(product.price) }}</div>
+        <div class="product-price">
+          <p v-if="product.discountRate !== 0">
+            <del>NT$ {{ numberToCommaString(product.price) }}</del>
+          </p>
+          <p>NT$ {{ numberToCommaString(product.price * ((100 - product.discountRate) / 100)) }}</p>
+        </div>
         <div class="product-color">
           <div class="title">顏色 : {{ productForm.color }}</div>
           <n-radio-group v-model:value="productForm.color" name="color">

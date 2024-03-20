@@ -121,3 +121,26 @@ export interface IStore {
   updatedAt: string
   createdAt: string
 }
+
+/**
+ * 購物車資料結構格式
+ */
+export interface ICart {
+  _id: string
+  product: IProduct
+  color: string
+  quantity: number
+  size: string
+}
+
+/**
+ * 品牌資料結構格式
+ */
+export interface IBrand {
+  _id: string
+  name: string
+  deliveryFee: number
+  freeDeliveryFee: number
+  updatedAt: string
+  createdAt: string
+}

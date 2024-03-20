@@ -80,6 +80,16 @@ export const useUserStore = defineStore(
       cart.value = data.result
     }
 
+    async function editCart(cartItem: {
+      product: string
+      quantity: number
+      color: string
+      size: string
+    }) {
+      const { data } = await api('auth').patch('/users/cart', cartItem)
+      cart.value = data.result
+    }
+
     async function logout() {
       await api('auth').delete('/users/logout')
       resetPiniaVal()
@@ -129,6 +139,7 @@ export const useUserStore = defineStore(
       editFav,
       getFav,
       addCart,
+      editCart,
       logout,
       resetPiniaVal
     }
