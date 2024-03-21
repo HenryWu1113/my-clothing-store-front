@@ -71,7 +71,8 @@
               <p>NT. {{ orderPrice }}</p>
             </div>
           </div>
-          <n-button type="info" ghost> 結帳 </n-button>
+          <n-button type="info" ghost @click="onOpen()"> 結帳 </n-button>
+          <PaymentModal />
         </div>
       </div>
     </div>
@@ -233,7 +234,7 @@
         gap: 1rem;
         .panel {
           font-size: 1rem;
-          background: $bg2-color;
+          background: $bg-color2;
           padding: 10px;
           color: $text-color2;
           > div {
@@ -259,6 +260,8 @@
 import { ref, reactive, computed, watch } from 'vue'
 import type { ICart, IBrand } from '@/types'
 import { useUserStore } from '@/stores/user'
+import { usePaymentModalStore } from '@/stores/usePaymentModal'
+import { storeToRefs } from 'pinia'
 import { api } from '@/plugins/axios'
 import {
   ArrowUndoOutline,
@@ -267,6 +270,11 @@ import {
   TrashOutline
 } from '@vicons/ionicons5'
 import { useMessage } from 'naive-ui'
+
+import PaymentModal from '@/components/modals/PaymentModal.vue'
+
+const { isOpen } = storeToRefs(usePaymentModalStore())
+const { onOpen, onClose } = usePaymentModalStore()
 
 const message = useMessage()
 const user = useUserStore()
