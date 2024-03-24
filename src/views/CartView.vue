@@ -71,8 +71,10 @@
               <p>NT. {{ orderPrice }}</p>
             </div>
           </div>
-          <n-button type="info" ghost @click="onOpen()"> 結帳 </n-button>
-          <PaymentModal />
+          <n-button :disabled="cart.length === 0" type="info" ghost @click="onOpen()">
+            結帳
+          </n-button>
+          <PaymentModal @update="getCart()" />
         </div>
       </div>
     </div>
@@ -316,6 +318,7 @@ async function getCart() {
   try {
     const { data } = await api('auth').get('/users/cart')
     console.log(data)
+    cart.length = 0
     cart.push(...data.result)
     console.log(cart)
   } catch (error: any) {

@@ -12,11 +12,11 @@
         </svg>
       </div>
       <n-icon :component="CcVisa"></n-icon>
-      <div class="card-number">{{ creditCardForm.number }}</div>
+      <div class="card-number">{{ creditCardForm.number.replace(/(\d{4})(?=\d)/g, '$1 ') }}</div>
       <div class="card-holder">{{ creditCardForm.name }}</div>
       <div class="card-expires">
         <p>GOOD<br />THUR</p>
-        <p>{{ creditCardForm.expireM }}/{{ creditCardForm.expireY }}</p>
+        <p>{{ creditCardForm.expireM.padStart(2, '0') }}/20{{ creditCardForm.expireY }}</p>
       </div>
     </div>
     <div class="card-back">
