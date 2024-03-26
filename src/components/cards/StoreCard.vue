@@ -25,9 +25,11 @@
   flex-direction: column;
   padding: 1rem;
   gap: 5px;
+
   .store-name {
     font-size: 1.5rem;
     color: red;
+    margin-bottom: 2rem;
   }
 
   .phone,
@@ -41,7 +43,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    > div {
+
+    >div {
       display: flex;
       gap: 5px;
     }

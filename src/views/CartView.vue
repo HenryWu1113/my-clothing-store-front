@@ -32,15 +32,9 @@
               </div>
               <div class="product-quantity">
                 <div class="quantity-pill">
-                  <n-icon
-                    :component="RemoveCircleOutline"
-                    @click="editCart(item._id, item.quantity - 1)"
-                  ></n-icon>
+                  <n-icon :component="RemoveCircleOutline" @click="editCart(item._id, item.quantity - 1)"></n-icon>
                   <div class="quantity">{{ item.quantity }}</div>
-                  <n-icon
-                    :component="AddCircleOutline"
-                    @click="editCart(item._id, item.quantity + 1)"
-                  ></n-icon>
+                  <n-icon :component="AddCircleOutline" @click="editCart(item._id, item.quantity + 1)"></n-icon>
                 </div>
               </div>
               <div class="total-price">
@@ -52,6 +46,10 @@
               </div>
             </div>
           </div>
+          <template v-if="loading">
+            <n-skeleton v-for="item in Array.from({ length: 3 }, (_, idx) => idx)" :key="item" :sharp="false"
+              size="medium" />
+          </template>
         </div>
         <div class="total-panel-wrap">
           <div class="panel">
@@ -88,9 +86,11 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
   .top-img-wrap {
     height: 250px;
-    > img {
+
+    >img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -102,6 +102,7 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+
     .title {
       font-size: 2rem;
       color: $text-color;
@@ -111,6 +112,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       .n-icon {
         padding-top: 8px;
         cursor: pointer;
@@ -120,26 +122,36 @@
     .body {
       display: flex;
       gap: 1rem;
+
       .product-lists-wrap {
         width: 70%;
         display: flex;
         flex-direction: column;
+
+        .n-skeleton {
+          height: 200px !important;
+          margin-bottom: 10px;
+        }
+
         .product-list {
           height: 200px;
           display: flex;
           align-items: center;
           padding: 1rem 0;
           border-bottom: 1px solid $border-color;
+
           .img-wrap {
             cursor: pointer;
             height: 100%;
             aspect-ratio: 1 / 1;
-            > img {
+
+            >img {
               width: 100%;
               height: 100%;
               object-fit: cover;
             }
           }
+
           .info-wrap {
             width: 100%;
             height: 100%;
@@ -147,25 +159,30 @@
             align-items: center;
             justify-content: space-between;
             padding-left: 1rem;
-            > div {
+
+            >div {
               height: 100%;
               display: flex;
               color: $text-color2;
+
               &.product-info {
                 width: 30%;
 
                 flex-direction: column;
                 justify-content: center;
                 font-weight: bold;
+
                 .name {
                   font-size: 1.2rem;
                 }
+
                 .info {
                   display: flex;
                   align-items: center;
                   gap: 0.5rem;
                   font-size: 1rem;
                   margin-top: 0.5rem;
+
                   .color {
                     width: 18px;
                     height: 18px;
@@ -198,6 +215,7 @@
                   border-radius: 100px;
                   padding: 5px;
                   justify-content: space-between;
+
                   .n-icon {
                     font-size: 1.5rem;
                     cursor: pointer;
@@ -219,6 +237,7 @@
                 align-items: center;
                 justify-content: flex-end;
                 padding-right: 2rem;
+
                 .n-icon {
                   cursor: pointer;
                   color: $error;
@@ -234,19 +253,23 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
+
         .panel {
           font-size: 1rem;
           background: $bg-color2;
           padding: 10px;
           color: $text-color2;
-          > div {
+
+          >div {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 5px 0;
-            > p:first-child {
+
+            >p:first-child {
               font-weight: bold;
             }
+
             &.total-fee {
               border-top: 1px solid $border-color;
             }
@@ -283,6 +306,8 @@ const user = useUserStore()
 
 const cart = reactive<ICart[]>([])
 
+const loading = ref(false)
+
 const brand = ref<IBrand>({
   _id: '',
   name: '',
@@ -316,6 +341,7 @@ async function editCart(id: string, quantity: number) {
 
 async function getCart() {
   try {
+    loading.value = true
     const { data } = await api('auth').get('/users/cart')
     console.log(data)
     cart.length = 0
@@ -325,6 +351,7 @@ async function getCart() {
     console.log(error)
     message.error(error.isAxiosError ? error.response.data.message : error.message)
   }
+  loading.value = false
 }
 getCart()
 

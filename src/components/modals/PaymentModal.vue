@@ -13,10 +13,7 @@
               <div class="category-wrap">
                 <div class="category">信用卡</div>
                 <div class="btn-group">
-                  <div
-                    @click="paymentForm.payMethod = '信用卡一次付清'"
-                    :class="payMethodSelected('信用卡一次付清')"
-                  >
+                  <div @click="paymentForm.payMethod = '信用卡一次付清'" :class="payMethodSelected('信用卡一次付清')">
                     一次付清
                   </div>
                 </div>
@@ -24,10 +21,7 @@
               <div class="category-wrap">
                 <div class="category">其他付款方式</div>
                 <div class="btn-group">
-                  <div
-                    @click="paymentForm.payMethod = '貨到付款'"
-                    :class="payMethodSelected('貨到付款')"
-                  >
+                  <div @click="paymentForm.payMethod = '貨到付款'" :class="payMethodSelected('貨到付款')">
                     貨到付款
                   </div>
                 </div>
@@ -40,49 +34,23 @@
                   <div class="card-wrap">
                     <CreditCard :creditCardForm="creditCardForm" />
                   </div>
-                  <n-form
-                    ref="cardFormRef"
-                    :label-width="80"
-                    :model="creditCardForm"
-                    :rules="rules"
-                    size="medium"
-                  >
+                  <n-form ref="cardFormRef" :label-width="80" :model="creditCardForm" :rules="rules" size="medium">
                     <div class="card-info-wrap">
                       <n-form-item label="姓名" path="name">
-                        <n-input
-                          v-model:value="creditCardForm.name"
-                          placeholder="請輸入姓名"
-                        ></n-input>
+                        <n-input v-model:value="creditCardForm.name" placeholder="請輸入姓名"></n-input>
                       </n-form-item>
                       <n-form-item label="信用卡號" path="number">
-                        <n-input
-                          v-model:value="creditCardForm.number"
-                          placeholder="請輸入卡號"
-                          maxlength="16"
-                        ></n-input>
+                        <n-input v-model:value="creditCardForm.number" placeholder="請輸入卡號" maxlength="16"></n-input>
                       </n-form-item>
                       <n-form-item class="expired month" label="月份" path="expireM">
-                        <n-input
-                          v-model:value="creditCardForm.expireM"
-                          maxlength="2"
-                          placeholder="請輸入月份"
-                        ></n-input>
+                        <n-input v-model:value="creditCardForm.expireM" maxlength="2" placeholder="請輸入月份"></n-input>
                       </n-form-item>
                       <n-form-item class="expired year" label="年份" path="expireY">
-                        <n-input
-                          v-model:value="creditCardForm.expireY"
-                          maxlength="2"
-                          placeholder="請輸入年份"
-                        ></n-input>
+                        <n-input v-model:value="creditCardForm.expireY" maxlength="2" placeholder="請輸入年份"></n-input>
                       </n-form-item>
                       <n-form-item label="卡片背面後3碼" path="cvv">
-                        <n-input
-                          @focus="creditCardForm.onBack = true"
-                          @blur="creditCardForm.onBack = false"
-                          v-model:value="creditCardForm.cvv"
-                          maxlength="3"
-                          placeholder="請輸入卡片背面後3碼"
-                        ></n-input>
+                        <n-input @focus="creditCardForm.onBack = true" @blur="creditCardForm.onBack = false"
+                          v-model:value="creditCardForm.cvv" maxlength="3" placeholder="請輸入卡片背面後3碼"></n-input>
                       </n-form-item>
                     </div>
                   </n-form>
@@ -91,37 +59,19 @@
               <div class="pay-info">
                 <div class="title">收貨人</div>
                 <div class="body">
-                  <n-form
-                    ref="cartFormRef"
-                    :label-width="80"
-                    :model="paymentForm"
-                    :rules="realRules"
-                    size="medium"
-                  >
+                  <n-form ref="cartFormRef" :label-width="80" :model="paymentForm" :rules="realRules" size="medium">
                     <div class="card-info-wrap">
                       <n-form-item label="姓名" path="recipientName">
-                        <n-input
-                          v-model:value="paymentForm.recipientName"
-                          placeholder="請輸入姓名"
-                        ></n-input>
+                        <n-input v-model:value="paymentForm.recipientName" placeholder="請輸入姓名"></n-input>
                       </n-form-item>
                       <n-form-item label="電話" path="recipientPhone">
-                        <n-input
-                          v-model:value="paymentForm.recipientPhone"
-                          placeholder="請輸入電話"
-                        ></n-input>
+                        <n-input v-model:value="paymentForm.recipientPhone" placeholder="請輸入電話"></n-input>
                       </n-form-item>
                       <n-form-item label="地址" path="recipientAddress">
-                        <n-input
-                          v-model:value="paymentForm.recipientAddress"
-                          placeholder="請輸入地址"
-                        ></n-input>
+                        <n-input v-model:value="paymentForm.recipientAddress" placeholder="請輸入地址"></n-input>
                       </n-form-item>
                       <n-form-item label="信箱" path="recipientEmail">
-                        <n-input
-                          v-model:value="paymentForm.recipientEmail"
-                          placeholder="請輸入信箱"
-                        ></n-input>
+                        <n-input v-model:value="paymentForm.recipientEmail" placeholder="請輸入信箱"></n-input>
                       </n-form-item>
                     </div>
                   </n-form>
@@ -130,41 +80,22 @@
             </template>
           </div>
           <div class="footer">
-            <n-button
-              v-if="currentStep === STEP.payMethod"
-              type="info"
-              ghost
-              @click="paymentModal.onClose(addCloseClass, resetStep)"
-            >
+            <n-button v-if="currentStep === STEP.payMethod" type="info" ghost
+              @click="paymentModal.onClose(addCloseClass, resetStep)">
               取消
             </n-button>
-            <n-button
-              v-if="currentStep === STEP.payInfo"
-              type="info"
-              ghost
-              @click="currentStep--"
-              :loading="loading"
-            >
+            <n-button v-if="currentStep === STEP.payInfo" type="info" ghost @click="currentStep--" :loading="loading">
               上一步
             </n-button>
             <n-button v-if="currentStep === STEP.payMethod" type="info" ghost @click="nextStep()">
               下一步
             </n-button>
-            <n-button
-              v-if="currentStep === STEP.payInfo"
-              type="info"
-              ghost
-              @click="handleValidateClick"
-              :loading="loading"
-            >
+            <n-button v-if="currentStep === STEP.payInfo" type="info" ghost @click="handleValidateClick"
+              :loading="loading">
               結帳 >
             </n-button>
-            <n-button
-              v-if="currentStep === STEP.complete"
-              type="info"
-              ghost
-              @click="paymentModal.onClose(addCloseClass, resetStep)"
-            >
+            <n-button v-if="currentStep === STEP.complete" type="info" ghost
+              @click="paymentModal.onClose(addCloseClass, resetStep)">
               關閉
             </n-button>
           </div>
@@ -198,7 +129,7 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    max-height: 90%;
+    max-height: 700px;
     overflow: auto;
 
     animation: onOpen 0.5s ease forwards;
@@ -237,6 +168,7 @@
 
       .category-wrap {
         font-size: 1rem;
+
         .category {
           padding: 5px;
           background: $bg-color2;
@@ -245,16 +177,19 @@
           justify-content: center;
           font-weight: bold;
         }
+
         .btn-group {
           display: flex;
           padding: 1rem;
           justify-content: center;
-          > div {
+
+          >div {
             padding: 5px 10px;
             border-radius: 5px;
             background: $border-color;
             color: $text-color2;
             cursor: pointer;
+
             &.selected {
               border: 1px solid $text-color2;
             }
@@ -267,6 +202,7 @@
         flex-direction: column;
         gap: 10px;
         font-size: 1rem;
+
         .title {
           padding: 5px;
           background: $bg-color2;
@@ -275,24 +211,29 @@
           justify-content: center;
           font-weight: bold;
         }
+
         .body {
           .card-wrap {
             padding: 10px;
             display: flex;
             justify-content: center;
           }
+
           .card-info-wrap {
             display: flex;
             flex-wrap: wrap;
             color: $text-color2;
-            > div {
+
+            >div {
               // display: flex;
               // flex-direction: column;
               // gap: 5px;
               // padding: 5px 0;
               width: 100%;
+
               &.expired {
                 width: calc(50% - 5px);
+
                 &.year {
                   margin-left: 10px;
                 }
@@ -302,6 +243,7 @@
         }
       }
     }
+
     .footer {
       display: flex;
       justify-content: center;

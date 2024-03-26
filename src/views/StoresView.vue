@@ -3,12 +3,8 @@
     <div class="title">店鋪資訊</div>
     <div class="stores-wrap">
       <template v-if="loading">
-        <n-skeleton
-          v-for="item in Array.from({ length: 20 }, (_, idx) => idx)"
-          :key="item"
-          :sharp="false"
-          size="medium"
-        />
+        <n-skeleton v-for="item in Array.from({ length: 10 }, (_, idx) => idx)" :key="item" :sharp="false"
+          size="medium" />
       </template>
       <StoreCard v-for="(store, idx) in stores" :key="store._id" :store="store" :idx="idx" />
     </div>
@@ -37,25 +33,25 @@
     flex-wrap: wrap;
     gap: 1rem;
 
-    > div {
-      width: calc((100% - 2rem) / 5);
+    >div {
+      // width: calc((100% - 2rem) / 5);
       // aspect-ratio: 4/3 !important;
-      height: 200px;
+      // height: 200px;
 
-      @include xxxxl {
-        width: calc((100% - 1rem) / 3);
-      }
+      // @include xxxxl {
+      //   width: calc((100% - 1rem) / 3);
+      // }
 
-      @include xxxl {
-        width: calc((100% - 1rem) / 2);
-      }
+      // @include xxxl {
+      width: calc((100% - 1rem) / 2);
+      // }
 
       @include sm {
         width: 100%;
       }
 
       &.n-skeleton {
-        height: auto !important;
+        height: 200px !important;
       }
     }
   }
@@ -79,7 +75,7 @@ const loading = ref(false)
 
 const stores = ref<IStore[]>([])
 
-/** 取所有穿搭 */
+/** 取所有店鋪 */
 async function getStores() {
   loading.value = true
   try {
