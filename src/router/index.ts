@@ -137,6 +137,15 @@ const router = createRouter({
           }
         },
         {
+          path: 'order/:id',
+          name: 'order_detail',
+          component: () => import('../views/OrderView.vue'),
+          meta: {
+            title: `${mainTitle} | 我的訂單`,
+            login: true
+          }
+        },
+        {
           path: 'news',
           name: 'AllNews',
           component: () => import('../views/AllNewsView.vue'),

@@ -189,6 +189,7 @@
             display: flex;
             flex-direction: column;
             gap: 5px;
+            width: calc(100% - 180px - 1rem);
             .name {
               font-size: 1.2rem;
               font-weight: bold;
@@ -201,7 +202,7 @@
               color: $text-color2;
             }
             .price {
-              padding-top: 1rem;
+              margin-top: auto;
               font-size: 1.5rem;
               font-weight: bold;
               color: $text-color;
