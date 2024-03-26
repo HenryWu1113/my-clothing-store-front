@@ -51,8 +51,22 @@
               <div class="name">{{ productInfo(product.product, 'name') }}</div>
               <div class="size">尺寸 : {{ product.size }}</div>
               <div class="color">顏色 : {{ product.color }}</div>
-              <div class="price">
+              <!-- <div class="price">
                 NT. {{ numberToCommaString(productInfo(product.product, 'price')) }}
+              </div> -->
+              <div class="price">
+                <p v-if="productInfo(product.product, 'discountRate') !== 0">
+                  <del>NT$ {{ numberToCommaString(productInfo(product.product, 'price')) }}</del>
+                </p>
+                <p>
+                  NT$
+                  {{
+                    numberToCommaString(
+                      productInfo(product.product, 'price') *
+                        ((100 - productInfo(product.product, 'discountRate')) / 100)
+                    )
+                  }}
+                </p>
               </div>
             </div>
           </div>
