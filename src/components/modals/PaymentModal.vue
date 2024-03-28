@@ -571,8 +571,8 @@ function handleValidateClick(e: MouseEvent) {
     cartFormRef.value?.validate(async (errors: any) => {
       if (!errors) {
         try {
-          await checkout(paymentForm.value)
           loading.value = true
+          await checkout(paymentForm.value)
           currentStep.value = STEP.complete
           emit('update')
           loading.value = false

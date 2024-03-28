@@ -58,6 +58,28 @@ export const useUserStore = defineStore(
       }
     }
 
+    async function editUser(userInfo: {
+      name?: string
+      sex?: string
+      birthday?: string
+      address?: string
+      cellphone?: string
+    }) {
+      const { data } = await api('auth').patch('users', userInfo)
+      name.value = data.result.name ?? ''
+      sex.value = data.result.sex ?? ''
+      birthday.value = data.result.birthday ?? ''
+      cellphone.value = data.result.cellphone ?? ''
+      address.value = data.result.address ?? ''
+    }
+
+    async function editUserImage(image: File, type: 'avatar' | 'backgroundImg') {
+      const fd = new FormData()
+      fd.append(type, image)
+      const { data } = await api('auth').patch('users/avatar', fd)
+      avatar.value = data.result.avatar ?? ''
+    }
+
     async function editFav(product_Id: string) {
       const { data } = await api('auth').post('/users/favorite', { product: product_Id })
       favorites.value = data.result
@@ -149,6 +171,8 @@ export const useUserStore = defineStore(
       isLogin,
       login,
       getUser,
+      editUser,
+      editUserImage,
       editFav,
       getFav,
       addCart,
