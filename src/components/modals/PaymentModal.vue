@@ -128,6 +128,12 @@
                 </div>
               </div>
             </template>
+            <template v-else-if="currentStep === STEP.complete">
+              <div class="success-wrap">
+                <n-icon :component="BagCheckSharp"></n-icon>
+                <p>訂單已成立!</p>
+              </div>
+            </template>
           </div>
           <div class="footer">
             <n-button
@@ -161,7 +167,7 @@
             </n-button>
             <n-button
               v-if="currentStep === STEP.complete"
-              type="info"
+              type="success"
               ghost
               @click="paymentModal.onClose(addCloseClass, resetStep)"
             >
@@ -311,6 +317,20 @@
           }
         }
       }
+
+      .success-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        color: $text-color;
+        .n-icon {
+          font-size: 5rem;
+        }
+        > p {
+          font-size: 1.5rem;
+        }
+      }
     }
 
     .footer {
@@ -329,7 +349,7 @@ import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/stores/user'
 import { usePaymentModalStore } from '@/stores/usePaymentModal'
 import { Times } from '@vicons/fa'
-import { AlertCircleOutline } from '@vicons/ionicons5'
+import { BagCheckSharp } from '@vicons/ionicons5'
 import { useMessage } from 'naive-ui'
 import type { IRating } from '@/types'
 import { isEmail, isMobilePhone } from 'validator'

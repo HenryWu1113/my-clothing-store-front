@@ -1,14 +1,7 @@
 <template>
   <div class="products-view myContainer min-h-screen">
-    <div class="product-filter-wrap">
-      <n-select v-model:value="productSort" :options="productSortOptions" />
-      <n-select v-model:value="productCategory" :options="productCategoryOptions" />
-      <n-icon :component="Filter"></n-icon>
-      <div class="price-range" v-if="false">
-        <n-checkbox v-model:checked="usePriceRange">售價篩選</n-checkbox>
-        <n-input-number v-model:value="priceRange.gte" />
-        <n-input-number v-model:value="priceRange.lte" />
-      </div>
+    <div class="title">
+      <p>我的收藏</p>
     </div>
     <div class="product-wrap">
       <template v-if="loading">
@@ -19,7 +12,14 @@
           size="medium"
         />
       </template>
-      <ProductCard v-else v-for="product in products" :key="product._id" :product="product" />
+      <ProductCard
+        v-else
+        v-for="(product, idx) in products"
+        :idx="idx"
+        :key="product._id"
+        :product="product"
+        @click="$router.push(`product/${product._id}`)"
+      />
     </div>
   </div>
 </template>
@@ -27,32 +27,15 @@
 <style scoped lang="scss">
 @import '@/styles/styles';
 .products-view {
-  > .category-top {
-    > img {
-      width: 100%;
-    }
-  }
-  .slogan {
-    padding: 2rem;
-    text-align: center;
+  .title {
+    font-size: 2rem;
     font-weight: bold;
-    font-size: 30px;
-  }
-  .product-filter-wrap {
-    border: 1px solid $border-color;
-    padding: 1rem;
+    color: $text-color;
+    border-bottom: 1px solid $border-color;
+    padding: 2rem 0 10px 0;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
-    > .n-icon {
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-    .price-range {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
   }
   .product-wrap {
     padding: 2rem 0;

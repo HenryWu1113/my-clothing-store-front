@@ -66,23 +66,23 @@
           position: relative;
           display: flex;
           flex-direction: column;
-          &:hover {
-            > p {
-              transform: translateY(-100%) scale(1.3);
-              &::before {
-                content: '';
-                box-shadow: 5px 5px 15px $border-color;
-                border-radius: 10px;
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-                width: 100px;
-                height: 30px;
-                background: $bg-color;
-              }
-            }
-          }
+          // &:hover {
+          //   > p {
+          //     transform: translateY(-100%) scale(1.3);
+          //     &::before {
+          //       content: '';
+          //       box-shadow: 5px 5px 15px $border-color;
+          //       border-radius: 10px;
+          //       position: absolute;
+          //       left: 50%;
+          //       top: 50%;
+          //       transform: translate(-50%, -50%);
+          //       width: 100px;
+          //       height: 30px;
+          //       background: $bg-color;
+          //     }
+          //   }
+          // }
           > img {
             border-radius: 10px;
             width: 100%;

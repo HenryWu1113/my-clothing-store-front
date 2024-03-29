@@ -17,14 +17,14 @@
       </div>
     </div>
     <div class="outfit-info-wrap">
-      <div class="clerk-info-wrap">
+      <div class="clerk-info-wrap" @click="$router.push(`/outfits/${outfit.clerk._id}`)">
         <div class="img-wrap">
           <img v-if="outfit.clerk.avatar" :src="outfit.clerk.avatar" />
           <img v-else :src="`https://source.boringavatars.com/beam/160/${outfit.clerk._id}`" />
         </div>
         <div class="clerk-info">
           <div class="name">{{ outfit.clerk.name }}</div>
-          <div class="store" @click="$router.push(`/store/${outfit.clerk.store._id}`)">
+          <div class="store" @click.stop="$router.push(`/store/${outfit.clerk.store._id}`)">
             {{ outfit.clerk.store.name }} >
           </div>
           <!-- <div class="store">{{ outfit.clerk.introduce ?? '這個人自我介紹什麼都沒寫唷!!' }}</div> -->

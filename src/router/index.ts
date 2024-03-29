@@ -65,6 +65,15 @@ const router = createRouter({
           }
         },
         {
+          path: 'outfits/:clerkId',
+          name: 'clerkOutfits',
+          component: () => import('../views/ClerkOutfits.vue'),
+          meta: {
+            title: `${mainTitle} | 店員穿搭`,
+            login: false
+          }
+        },
+        {
           path: 'outfit/:id',
           name: 'outfit',
           component: () => import('../views/OutfitView.vue'),
