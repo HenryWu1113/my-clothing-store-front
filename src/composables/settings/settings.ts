@@ -27,11 +27,29 @@ export const menuSelection = [
   }
 ]
 
+type homeCarouselType = {
+  key: string
+  children: {
+    key: string
+    src: string
+    type: 'video' | 'img'
+    info: {
+      title: string
+      text: string
+      price: null | string
+      showBtn: boolean
+      position: 'left' | 'right'
+      textGradient?: string
+      location?: string
+    }
+  }[]
+}
+
 /** 首頁輪播圖控制 */
-export const homeCarousel = [
+export const homeCarousel: homeCarouselType[] = [
   {
     key: '1',
-    chlidren: [
+    children: [
       {
         key: '1-1',
         src: new URL('../../assets/images/home/video1new.mp4', import.meta.url).href,
@@ -40,8 +58,9 @@ export const homeCarousel = [
           title: '穿出自信，展現不凡',
           text: '好衣服讓你自信，更加突出與眾不同',
           price: null,
-          showBtn: true,
-          position: 'left'
+          showBtn: false,
+          position: 'left',
+          textGradient: 'error'
         }
       },
       {
@@ -53,7 +72,9 @@ export const homeCarousel = [
           text: '獨特風格展現卓越品味，與眾不同',
           price: null,
           showBtn: true,
-          position: 'left'
+          position: 'left',
+          textGradient: 'error',
+          location: '/products?clothingGender=female&clothingPart=shirts&sort=integrate'
         }
       },
       {
@@ -64,8 +85,9 @@ export const homeCarousel = [
           title: '時尚從這裡開始',
           text: '在這裡找到你的時尚起點，引領潮流',
           price: null,
-          showBtn: true,
-          position: 'left'
+          showBtn: false,
+          position: 'right',
+          textGradient: 'info'
         }
       },
       {
@@ -77,14 +99,15 @@ export const homeCarousel = [
           text: '找到屬於自己的風格，獨一無二',
           price: null,
           showBtn: true,
-          position: 'right'
+          position: 'right',
+          location: '/products?clothingGender=female&clothingPart=shirts&sort=integrate'
         }
       }
     ]
   },
   {
     key: '2',
-    chlidren: [
+    children: [
       {
         key: '2-1',
         src: new URL('../../assets/images/home/img4.jpg', import.meta.url).href,
@@ -94,7 +117,8 @@ export const homeCarousel = [
           text: ' 簡約風格卻不失卓越，永不過時',
           price: null,
           showBtn: true,
-          position: 'right'
+          position: 'right',
+          location: '/products?clothingGender=female&clothingPart=pants&sort=integrate'
         }
       },
       {
@@ -106,7 +130,8 @@ export const homeCarousel = [
           text: '衣著展現品味，從這裡開始精彩生活',
           price: null,
           showBtn: true,
-          position: 'right'
+          position: 'right',
+          location: '/products?clothingGender=male&clothingPart=tshirts&sort=integrate'
         }
       },
       {
@@ -129,7 +154,7 @@ export const homeCarousel = [
           title: '讓衣服成為你的語言',
           text: '用衣服表達自我，成為你的語言',
           price: null,
-          showBtn: true,
+          showBtn: false,
           position: 'left'
         }
       }
@@ -137,7 +162,7 @@ export const homeCarousel = [
   },
   {
     key: '3',
-    chlidren: [
+    children: [
       {
         key: '3-1',
         src: new URL('../../assets/images/home/img8.jpg', import.meta.url).href,
@@ -171,7 +196,8 @@ export const homeCarousel = [
           text: '時尚不僅是外在表現，更是內在態度的展示',
           price: null,
           showBtn: true,
-          position: 'right'
+          position: 'right',
+          textGradient: 'info'
         }
       },
       {
@@ -190,7 +216,7 @@ export const homeCarousel = [
   },
   {
     key: '4',
-    chlidren: [
+    children: [
       {
         key: '4-1',
         src: new URL('../../assets/images/home/img12.jpg', import.meta.url).href,
@@ -236,7 +262,8 @@ export const homeCarousel = [
           text: '不僅展現時尚，更引領時尚潮流的發展',
           price: null,
           showBtn: true,
-          position: 'right'
+          position: 'right',
+          textGradient: 'error'
         }
       }
     ]

@@ -26,7 +26,7 @@
           class="mySwiper"
           :speed="800"
         >
-          <swiper-slide class="carousel-page" v-for="part in section.chlidren" :key="part.key">
+          <swiper-slide class="carousel-page" v-for="part in section.children" :key="part.key">
             <img class="carousel-img" v-if="part.type === 'img'" :src="part.src" />
             <video
               class="carousel-video"
@@ -38,13 +38,21 @@
             />
             <div class="info-wrap" :style="infoPosition(part.info.position)">
               <div class="title">
-                <n-gradient-text type="warning">
+                <n-gradient-text :type="part.info.textGradient ?? 'warning'">
                   {{ part.info.title }}
                 </n-gradient-text>
               </div>
               <div class="text" v-html="part.info.text"></div>
-              <div v-if="part.info.showBtn" class="see-more">瀏覽更多</div>
+              <div
+                v-if="part.info.showBtn"
+                class="see-more"
+                @click="$router.push(part.info.location ?? '/')"
+              >
+                瀏覽更多
+              </div>
             </div>
+            <div v-if="false" class="prev-slide slide-btn">上一張</div>
+            <div v-if="false" class="next-slide slide-btn">下一張</div>
           </swiper-slide>
         </swiper>
       </swiper-slide>
@@ -290,6 +298,24 @@
             &:hover {
               transform: translateY(-5px);
             }
+          }
+        }
+
+        .slide-btn {
+          position: absolute;
+          bottom: 10px;
+          padding: 5px 10px;
+          border: 1px solid white;
+          border-radius: 5px;
+          transform: translateX(-50%);
+          cursor: pointer;
+          z-index: 99999;
+          &.prev-slide {
+            left: 47%;
+          }
+
+          &.next-slide {
+            left: 53%;
           }
         }
       }
