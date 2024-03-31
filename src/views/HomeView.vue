@@ -44,7 +44,7 @@
               </div>
               <div class="text" v-html="part.info.text"></div>
               <div
-                v-if="part.info.showBtn"
+                v-if="part.info.location"
                 class="see-more"
                 @click="$router.push(part.info.location ?? '/')"
               >

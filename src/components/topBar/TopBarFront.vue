@@ -1,9 +1,6 @@
 <template>
   <header>
-    <div class="flex flex-row cursor-pointer items-center" @click="$router.push('/')">
-      <img class="h-4/5" src="/src/assets/images/logo_dark.png" />
-      <n-gradient-text class="text-2xl ml-2 font-bold" type="info">STORE</n-gradient-text>
-    </div>
+    <div class="logo">H</div>
     <CategoriesBtns />
     <MunuBtns />
   </header>
@@ -18,6 +15,7 @@ header {
   height: 72px;
   border-bottom: 1px solid $border-color;
   display: flex;
+  align-items: center;
   padding: 0 1rem;
   width: 100%;
   position: fixed;
@@ -25,6 +23,18 @@ header {
   left: 0;
   z-index: 9999;
   background: $bg-color;
+  .logo {
+    height: 70%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background: $text-color;
+    display: flex;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: $bg-color;
+  }
 }
 </style>
 

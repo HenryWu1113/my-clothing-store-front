@@ -1,7 +1,7 @@
 import { ref, type Ref } from 'vue'
 import { defineStore } from 'pinia'
 
-export const useCommentModalStore = defineStore('commentModal', () => {
+export const useRegisterModalStore = defineStore('registerModal', () => {
   // state
   const isOpen: Ref<boolean> = ref(false)
   // getters

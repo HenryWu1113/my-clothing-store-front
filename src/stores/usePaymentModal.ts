@@ -18,7 +18,9 @@ export const usePaymentModalStore = defineStore('paymentModal', () => {
     console.log(args)
     isOpen.value = false
     args.forEach((el) => {
-      el()
+      if (typeof el === 'function') {
+        el()
+      }
     })
   }
 

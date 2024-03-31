@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import TopBarFront from '@/components/topBar/TopBarFront.vue'
 import { useUserStore } from '@/stores/user'
+import { useLoginModalStore } from '@/stores/useLoginModal'
 
 const mainTitle = '我的商城'
 
@@ -201,8 +202,9 @@ router.beforeEach((to, from, next) => {
   if (user.isLogin && (to.path === '/register' || to.path === '/login')) {
     next('/')
   } else if (to.meta.login && !user.isLogin) {
-    alert('not Auth')
-    next('/')
+    const { onOpen } = useLoginModalStore()
+    onOpen()
+    // next('/')
   } else {
     next()
   }

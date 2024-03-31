@@ -14,24 +14,8 @@
         </div>
       </div>
     </n-dropdown>
-    <LoginModal
-      :isOpen="modalControll.isLoginOpen"
-      :onClose="
-        () => {
-          modalControll.isLoginOpen = false
-        }
-      "
-      :onSwitch="switchRegister"
-    />
-    <RegisterModal
-      :isOpen="modalControll.isRegisterOpen"
-      :onClose="
-        () => {
-          modalControll.isRegisterOpen = false
-        }
-      "
-      :onSwitch="switchLogin"
-    />
+    <LoginModal :isOpen="login.isOpen" :onClose="login.onClose" :onSwitch="switchRegister" />
+    <RegisterModal :isOpen="register.isOpen" :onClose="register.onClose" :onSwitch="switchLogin" />
   </div>
 </template>
 <style lang="scss" scoped>
@@ -107,6 +91,8 @@ import { useRouter } from 'vue-router'
 import type { Component } from 'vue'
 import { NIcon } from 'naive-ui'
 import { useUserStore } from '@/stores/user'
+import { useRegisterModalStore } from '@/stores/useRegisterModal'
+import { useLoginModalStore } from '@/stores/useLoginModal'
 import { storeToRefs } from 'pinia'
 import { useMessage } from 'naive-ui'
 
@@ -119,6 +105,8 @@ const router = useRouter()
 const message = useMessage()
 
 const user = useUserStore()
+const login = useLoginModalStore()
+const register = useRegisterModalStore()
 const { isLogin, cart } = storeToRefs(user)
 
 /** 登入、註冊彈出的 Modal 控制實例 */
@@ -213,14 +201,12 @@ const options: IoptionsType[] = reactive([
 
 /** 切換登入 */
 const switchLogin = () => {
-  modalControll.value.isLoginOpen = true
-  modalControll.value.isRegisterOpen = false
+  register.onClose(login.onOpen)
 }
 
 /** 切換註冊 */
 const switchRegister = () => {
-  modalControll.value.isRegisterOpen = true
-  modalControll.value.isLoginOpen = false
+  login.onClose(register.onOpen)
 }
 
 /** 點擊個人選單選項 */
