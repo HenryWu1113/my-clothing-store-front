@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div class="logo">H</div>
+    <div class="logo" @click="$router.push('/')">H</div>
     <CategoriesBtns />
     <MunuBtns />
   </header>
@@ -24,6 +24,7 @@ header {
   z-index: 9999;
   background: $bg-color;
   .logo {
+    cursor: pointer;
     height: 70%;
     aspect-ratio: 1/1;
     border-radius: 50%;
