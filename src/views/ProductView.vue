@@ -95,7 +95,7 @@
           <div class="product-description-wrap">
             <div>
               <div class="description-title">商品說明</div>
-              <div class="description-body">{{ product.description }}</div>
+              <div class="description-body" v-html="product.description"></div>
             </div>
             <div>
               <div class="description-title">商品尺寸</div>
