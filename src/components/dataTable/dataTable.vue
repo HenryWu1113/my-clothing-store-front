@@ -300,7 +300,6 @@ import { TriangleSharp } from '@vicons/ionicons5'
 // import { useDraggableStore } from '@/stores/draggableStore';
 
 import _ from 'lodash'
-import type { T } from 'vitest/dist/reporters-1evA5lom.js'
 
 // const { devices, deviceLoadState } = storeToRefs(useDeviceStore())
 // const { currentLanguage } = storeToRefs(useUserStore())
