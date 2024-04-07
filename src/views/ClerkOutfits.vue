@@ -146,12 +146,13 @@ const loading = ref(false)
 
 const clerk = ref<IAdmin>({
   _id: '',
+  name: '',
   account: '',
   disabled: true,
   email: '',
   introduce: '',
-  role: '',
-  sex: '',
+  role: 'clerk',
+  sex: '男',
   store: {
     _id: '',
     name: '',

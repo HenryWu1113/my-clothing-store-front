@@ -257,7 +257,7 @@ const outfit = ref<IOutfit>({
     avatar: undefined,
     height: undefined,
     weight: undefined,
-    sex: '',
+    sex: '男',
     _id: '',
     name: undefined,
     store: {
