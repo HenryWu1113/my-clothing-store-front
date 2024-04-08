@@ -69,6 +69,9 @@
           font-size: 1rem;
           width: 100px;
         }
+        &:last-child {
+          white-space: pre-wrap;
+        }
       }
     }
 
