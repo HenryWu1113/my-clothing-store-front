@@ -21,6 +21,11 @@ export const menuSelection = [
     route: '/stores'
   },
   {
+    key: 'news',
+    text: '最新消息',
+    route: '/news'
+  },
+  {
     key: 'aboutUs',
     text: '關於我們',
     route: '/aboutus'

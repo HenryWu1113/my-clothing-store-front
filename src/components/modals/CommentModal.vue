@@ -31,9 +31,18 @@
               </div>
             </div>
             <div class="user-rating">
-              <n-rate size="large" :default-value="commentForm.score" @update:value="scoreOnUpdate" />
-              <n-input maxlength="20" show-count v-model:value="commentForm.description" type="textarea"
-                placeholder="請輸入商品評論" />
+              <n-rate
+                size="large"
+                :default-value="commentForm.score"
+                @update:value="scoreOnUpdate"
+              />
+              <n-input
+                maxlength="20"
+                show-count
+                v-model:value="commentForm.description"
+                type="textarea"
+                placeholder="請輸入商品評論"
+              />
             </div>
             <div class="img-wrap">
               <div class="add-btn">
@@ -44,7 +53,11 @@
               </div>
               <div class="preview-img-wrap">
                 <n-image-group>
-                  <n-image v-for="imgsrc in commentForm.previewImages" :key="imgsrc" :src="imgsrc" />
+                  <n-image
+                    v-for="imgsrc in commentForm.previewImages"
+                    :key="imgsrc"
+                    :src="imgsrc"
+                  />
                 </n-image-group>
               </div>
             </div>
@@ -122,14 +135,14 @@
       font-weight: bold;
       color: $text-color2;
 
-      >p {
+      > p {
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
       }
 
-      >.n-icon {
+      > .n-icon {
         cursor: pointer;
       }
     }
@@ -151,7 +164,7 @@
           border-radius: 50%;
           overflow: hidden;
 
-          >img {
+          > img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -164,11 +177,11 @@
           gap: 5px;
           color: $text-color2;
 
-          >p {
+          > p {
             font-size: 1.2rem;
           }
 
-          >div {
+          > div {
             display: flex;
             align-items: center;
 
@@ -231,7 +244,7 @@
           justify-content: center;
 
           :deep(.n-image) {
-            >img {
+            > img {
               width: 150px !important;
               height: 150px !important;
               object-fit: cover !important;
@@ -274,7 +287,7 @@
         display: flex;
         justify-content: flex-end;
 
-        >p {
+        > p {
           font-size: 1rem;
           cursor: pointer;
         }
@@ -371,6 +384,8 @@ async function sendComment() {
       // 多傳了商品的 id 應該沒關係
       // @ts-ignore
       await api('auth').patch(`/ratings/edit/${props.myRating._id}`, fd)
+      // 把 image 先變空才不會重複上傳
+      commentForm.value.images = []
     }
     emit('update')
     commentModal.onClose(addCloseClass)

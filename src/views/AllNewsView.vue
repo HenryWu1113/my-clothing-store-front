@@ -61,20 +61,30 @@ const newsArr = ref<INews[]>([])
 
 const pageSize = ref(6)
 const currentPage = ref(1)
-const pageCount = ref(2)
+const pageCount = ref(1)
 
 /** 取得最新消息 */
 async function getAllNews() {
   try {
     const { data } = await api().get('/news')
     console.log(data)
-    newsArr.value = data.result
+    newsArr.value = data.result.map((item: any) => ({
+      ...item,
+      content: changeHTMLToString(item.content)
+    }))
     pageCount.value = Math.ceil(newsArr.value.length / 6)
   } catch (error: any) {
     message.error(error.isAxiosError ? error.response.data.message : error.message)
   }
 }
 getAllNews()
+
+/** 把 HTML 字串改成一般字串 */
+function changeHTMLToString(HTMLString: string) {
+  const element = document.createElement('div')
+  element.innerHTML = HTMLString
+  return element.innerText ?? ''
+}
 
 const filterNewsArr = computed(() => {
   return newsArr.value.slice(

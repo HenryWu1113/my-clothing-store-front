@@ -11,7 +11,7 @@
           <p>{{ formatTime(news.createdAt) }}</p>
         </div>
         <div class="title" :title="news.title">{{ news.title }}</div>
-        <div class="content">{{ news.content }}</div>
+        <div class="content" v-html="news.content"></div>
       </div>
       <div class="other-news-lists-wrap">
         <div class="title">其他消息</div>
