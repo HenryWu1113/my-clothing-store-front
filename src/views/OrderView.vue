@@ -42,6 +42,10 @@
             <p>{{ formatTime(currentOrder.createdAt) }}</p>
           </div>
           <div class="order-info">
+            <p>配送狀態</p>
+            <p>{{ currentOrder.sendStatus }}</p>
+          </div>
+          <div class="order-info">
             <p>訂單狀態</p>
             <p>{{ currentOrder.orderStatus }}</p>
           </div>
@@ -94,6 +98,10 @@
           <div class="order-info">
             <p>付款方式</p>
             <p>{{ currentOrder.payMethod }}</p>
+          </div>
+          <div class="order-info">
+            <p>付款狀態</p>
+            <p>{{ currentOrder.payStatus }}</p>
           </div>
           <div class="order-info">
             <p>商品金額</p>
