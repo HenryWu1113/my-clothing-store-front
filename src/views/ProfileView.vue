@@ -34,7 +34,7 @@
         </div>
         <div class="info-wrap">
           <p>信箱 (帳號綁定)</p>
-          <p :class="name.length === 0 ? 'empty' : ''">{{ isEmptyString(email) }}</p>
+          <p :class="email.length === 0 ? 'empty' : ''">{{ isEmptyString(email) }}</p>
         </div>
         <n-button ghost type="info" @click="page = PAGE.edit">編輯個人資訊</n-button>
       </template>
@@ -149,9 +149,10 @@
     .n-form {
       .n-form-item {
         --n-label-font-size: 1rem !important;
-        .n-input {
+        .n-input,
+        .n-date-picker {
           --n-font-size: 1rem !important;
-          width: 200px;
+          width: 250px;
         }
       }
     }

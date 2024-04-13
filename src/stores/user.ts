@@ -9,18 +9,18 @@ export const useUserStore = defineStore(
   () => {
     // state
     const userId: Ref<string> = ref('')
-    const token: Ref<string> = ref('')
-    const email: Ref<string> = ref('')
     const address: Ref<string> = ref('')
-    const cellphone: Ref<string> = ref('')
-    const name: Ref<string> = ref('')
-    const sex: Ref<string> = ref('')
-    const birthday: Ref<string> = ref('')
     const avatar: Ref<string> = ref('')
     const backgroundImg: Ref<string> = ref('')
-    const favorites: Ref<string[]> = ref([])
+    const birthday: Ref<string> = ref('')
     const cart: Ref<number> = ref(0)
-    const theme: Ref<string> = ref('')
+    const cellphone: Ref<string> = ref('')
+    const disabled: Ref<boolean> = ref(false)
+    const email: Ref<string> = ref('')
+    const favorites: Ref<string[]> = ref([])
+    const name: Ref<string> = ref('')
+    const sex: Ref<string> = ref('')
+    const token: Ref<string> = ref('')
     // getters
     /** 是否登入中 */
     const isLogin: ComputedRef<boolean> = computed(() => {
@@ -41,6 +41,7 @@ export const useUserStore = defineStore(
         const { data } = await api('auth').get('/users')
         console.log(data)
         userId.value = data.result._id
+        disabled.value = data.result.disabled
         email.value = data.result.email
         address.value = data.result.address ?? ''
         cellphone.value = data.result.cellphone ?? ''
@@ -52,7 +53,6 @@ export const useUserStore = defineStore(
         backgroundImg.value = data.result.backgroundImg ?? ''
         favorites.value = data.result.favorites
         cart.value = data.result.cart.length
-        // theme.value = ''
       } catch (error) {
         logout()
       }
@@ -76,8 +76,13 @@ export const useUserStore = defineStore(
     async function editUserImage(image: File, type: 'avatar' | 'backgroundImg') {
       const fd = new FormData()
       fd.append(type, image)
-      const { data } = await api('auth').patch('users/avatar', fd)
-      avatar.value = data.result.avatar ?? ''
+      if (type === 'avatar') {
+        const { data } = await api('auth').patch('users/avatar', fd)
+        avatar.value = data.result.avatar ?? ''
+      } else if (type === 'backgroundImg') {
+        const { data } = await api('auth').patch('users/backgroundImg', fd)
+        backgroundImg.value = data.result.backgroundImg ?? ''
+      }
     }
 
     async function editFav(product_Id: string) {
@@ -151,7 +156,7 @@ export const useUserStore = defineStore(
       backgroundImg.value = ''
       favorites.value = []
       cart.value = 0
-      // theme.value = ''
+      disabled.value = false
     }
 
     return {
@@ -160,6 +165,7 @@ export const useUserStore = defineStore(
       email,
       address,
       cellphone,
+      disabled,
       name,
       sex,
       birthday,
@@ -167,7 +173,6 @@ export const useUserStore = defineStore(
       backgroundImg,
       favorites,
       cart,
-      theme,
       isLogin,
       login,
       getUser,

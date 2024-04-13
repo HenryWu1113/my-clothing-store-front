@@ -3,12 +3,12 @@ export const menuSelection = [
   {
     key: 'man',
     text: '男裝',
-    route: '/category?gender=male&categoryType=clothingPart'
+    route: '/category?gender=男&categoryType=clothingPart'
   },
   {
     key: 'woman',
     text: '女裝',
-    route: '/category?gender=female&categoryType=clothingPart'
+    route: '/category?gender=女&categoryType=clothingPart'
   },
   {
     key: 'outfits',
