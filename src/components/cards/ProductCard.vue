@@ -5,12 +5,8 @@
     </div>
     <div class="product-info">
       <div class="product-colors">
-        <div
-          v-for="color in product.colors"
-          :key="color"
-          :style="{ background: color, border: color === 'white' ? '1px solid black' : '' }"
-        >
-          <div :style="{ background: color }"></div>
+        <div v-for="color in product.colors" :key="color._id" :style="{ background: color.key }">
+          <div :style="{ background: color.key }"></div>
         </div>
       </div>
       <div class="product-name">{{ product.name }}</div>
@@ -74,6 +70,7 @@
         height: 20px;
         border-radius: 50%;
         position: relative;
+        border: 1px solid $border-color;
         &::before {
           content: '';
           width: 16px;
