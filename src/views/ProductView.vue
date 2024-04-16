@@ -29,21 +29,28 @@
           <p>NT$ {{ numberToCommaString(product.price * ((100 - product.discountRate) / 100)) }}</p>
         </div>
         <div class="product-color">
-          <div class="title">顏色 : {{ productForm.color }}</div>
+          <div class="title">
+            <p>顏色 :</p>
+            <div class="color-ball" :style="{ background: selectedColor }"></div>
+          </div>
           <n-radio-group v-model:value="productForm.color" name="color">
             <n-radio
-              :style="radioStyle(productForm.color)"
               v-for="color in product.colors"
-              :key="color"
-              :value="color"
-              :label="color"
+              :key="color._id"
+              :value="color._id"
+              :label="color.name"
             />
           </n-radio-group>
         </div>
         <div class="product-size">
-          <div class="title">尺寸 : {{ productForm.size }}</div>
+          <div class="title">尺寸 : {{ selectedSize }}</div>
           <n-radio-group v-model:value="productForm.size" name="size">
-            <n-radio v-for="size in filterSizeSort()" :key="size" :value="size" :label="size" />
+            <n-radio
+              v-for="size in filterSizeSort()"
+              :key="size._id"
+              :value="size._id"
+              :label="size.name"
+            />
           </n-radio-group>
         </div>
         <div class="product-quantity">
@@ -294,6 +301,15 @@
         .title {
           color: $text-color;
           font-size: 1rem;
+          display: flex;
+          align-items: center;
+          .color-ball {
+            margin-left: 0.5rem;
+            width: 20px;
+            height: 20px;
+            // border: 1px solid $border-color;
+            border-radius: 50%;
+          }
         }
 
         .n-radio {
@@ -629,8 +645,8 @@ const radioStyle = (color: string) => {
 
 /** 商品 */
 const product: Ref<IProduct> = ref({
-  clothingGender: 'male',
-  clothingPart: 'shirts',
+  clothingGender: '男',
+  clothingPart: '',
   colors: [],
   createdAt: '',
   description: '',
@@ -754,7 +770,7 @@ async function getRelatedOutfits() {
 const filterSizeSort = () => {
   return product.value.sizes.sort((a: any, b: any) => {
     const sortArr = ['XS', 'S', 'M', 'L', 'XL']
-    if (sortArr.indexOf(a) > sortArr.indexOf(b)) return 1
+    if (sortArr.indexOf(a.key) > sortArr.indexOf(b.key)) return 1
     else return -1
   })
 }
@@ -827,6 +843,20 @@ const avgScore = computed(() => {
     ratings.value.reduce((acc: any, curr: any) => acc + curr.score, 0) / ratings.value.length
   if (isNaN(avg)) return 0.0
   return avg
+})
+
+/** 選擇的尺寸 */
+const selectedColor = computed(() => {
+  const idx = product.value.colors.findIndex((item) => item._id === productForm.value.color)
+  if (idx === -1) return '未選取'
+  return product.value.colors[idx].key
+})
+
+/** 選擇的尺寸 */
+const selectedSize = computed(() => {
+  const idx = product.value.sizes.findIndex((item) => item._id === productForm.value.size)
+  if (idx === -1) return '未選取'
+  return product.value.sizes[idx].name
 })
 
 watch(

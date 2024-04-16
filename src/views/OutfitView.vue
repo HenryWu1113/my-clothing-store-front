@@ -49,11 +49,9 @@
             </div>
             <div class="product-info">
               <div class="name">{{ productInfo(product.product, 'name') }}</div>
-              <div class="size">尺寸 : {{ product.size }}</div>
-              <div class="color">顏色 : {{ product.color }}</div>
-              <!-- <div class="price">
-                NT. {{ numberToCommaString(productInfo(product.product, 'price')) }}
-              </div> -->
+              <div class="size">尺寸 : {{ product.size.name }}</div>
+              <div class="color">顏色 : {{ product.color.name }}</div>
+              <div class="color-ball" :style="{ background: product.color.key }"></div>
               <div class="price">
                 <p v-if="productInfo(product.product, 'discountRate') !== 0">
                   <del>NT$ {{ numberToCommaString(productInfo(product.product, 'price')) }}</del>
@@ -214,6 +212,11 @@
               font-size: 1rem;
               font-weight: bold;
               color: $text-color2;
+            }
+            .color-ball {
+              width: 20px;
+              height: 20px;
+              border-radius: 50%;
             }
             .price {
               margin-top: auto;

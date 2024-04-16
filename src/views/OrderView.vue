@@ -67,9 +67,10 @@
             </div>
             <div class="product-info">
               <div class="name">{{ product.product.name }}</div>
-              <div class="size">尺寸 : {{ product.size }}</div>
-              <div class="color">顏色 : {{ product.color }}</div>
+              <div class="size">尺寸 : {{ product.size.name }}</div>
+              <div class="color">顏色 : {{ product.color.name }}</div>
               <div class="color">數量 : {{ product.quantity }}</div>
+              <div class="color-ball" :style="{ background: product.color.key }"></div>
               <div class="price">NT. {{ numberToCommaString(product.price) }}</div>
             </div>
           </div>
@@ -224,6 +225,11 @@
             font-size: 1rem;
             font-weight: bold;
             color: $text-color2;
+          }
+          .color-ball {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
           }
           .price {
             margin-top: auto;

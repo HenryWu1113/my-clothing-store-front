@@ -20,8 +20,8 @@
               <div class="product-info">
                 <div class="name">{{ item.product.name }}</div>
                 <div class="info">
-                  <div class="color" :style="{ background: item.color }"></div>
-                  <div class="size">尺寸 : {{ item.size }}</div>
+                  <div class="color" :style="{ background: item.color.key }"></div>
+                  <div class="size">尺寸 : {{ item.size.name }}</div>
                 </div>
               </div>
               <div class="product-price">
@@ -32,9 +32,15 @@
               </div>
               <div class="product-quantity">
                 <div class="quantity-pill">
-                  <n-icon :component="RemoveCircleOutline" @click="editCart(item._id, item.quantity - 1)"></n-icon>
+                  <n-icon
+                    :component="RemoveCircleOutline"
+                    @click="editCart(item._id, item.quantity - 1)"
+                  ></n-icon>
                   <div class="quantity">{{ item.quantity }}</div>
-                  <n-icon :component="AddCircleOutline" @click="editCart(item._id, item.quantity + 1)"></n-icon>
+                  <n-icon
+                    :component="AddCircleOutline"
+                    @click="editCart(item._id, item.quantity + 1)"
+                  ></n-icon>
                 </div>
               </div>
               <div class="total-price">
@@ -47,8 +53,12 @@
             </div>
           </div>
           <template v-if="loading">
-            <n-skeleton v-for="item in Array.from({ length: 3 }, (_, idx) => idx)" :key="item" :sharp="false"
-              size="medium" />
+            <n-skeleton
+              v-for="item in Array.from({ length: 3 }, (_, idx) => idx)"
+              :key="item"
+              :sharp="false"
+              size="medium"
+            />
           </template>
         </div>
         <div class="total-panel-wrap">
@@ -90,7 +100,7 @@
   .top-img-wrap {
     height: 250px;
 
-    >img {
+    > img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -145,7 +155,7 @@
             height: 100%;
             aspect-ratio: 1 / 1;
 
-            >img {
+            > img {
               width: 100%;
               height: 100%;
               object-fit: cover;
@@ -160,7 +170,7 @@
             justify-content: space-between;
             padding-left: 1rem;
 
-            >div {
+            > div {
               height: 100%;
               display: flex;
               color: $text-color2;
@@ -260,13 +270,13 @@
           padding: 10px;
           color: $text-color2;
 
-          >div {
+          > div {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 5px 0;
 
-            >p:first-child {
+            > p:first-child {
               font-weight: bold;
             }
 
@@ -323,8 +333,8 @@ async function editCart(id: string, quantity: number) {
   const cartItem = {
     product: cart[idx].product._id,
     quantity,
-    size: cart[idx].size,
-    color: cart[idx].color
+    size: cart[idx].size._id,
+    color: cart[idx].color._id
   }
   try {
     await user.editCart(cartItem)
