@@ -343,12 +343,14 @@ function goOrderDetail(id: string) {
 
 async function getOrders() {
   try {
+    tableSetting.value.isLoading = true
     const { data } = await api('auth').get('/orders')
     orders.value = data.result
     console.log(data)
   } catch (error: any) {
     message.error(error.isAxiosError ? error.response.data.message : error.message)
   }
+  tableSetting.value.isLoading = false
 }
 
 async function getOrder() {
