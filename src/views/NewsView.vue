@@ -175,7 +175,7 @@ const route = useRoute()
 const router = useRouter()
 const message = useMessage()
 
-const imgSrc = ref(new URL('../assets/images/thunderstorm.jpg', import.meta.url).href)
+const imgSrc = ref(new URL('../assets/images/topImg2.jpg', import.meta.url).href)
 
 const isLoaded = ref(true)
 

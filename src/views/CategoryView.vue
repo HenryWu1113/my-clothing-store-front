@@ -135,7 +135,7 @@ const router = useRouter()
 
 console.log(route.params.id)
 
-const imgSrc = ref(new URL('../assets/images/thunderstorm.jpg', import.meta.url).href)
+const imgSrc = ref(new URL('../assets/images/topImg1.jpg', import.meta.url).href)
 
 const categories = ref<ICategory[]>([])
 const loading = ref(false)
@@ -144,7 +144,9 @@ const loading = ref(false)
 const matchImgObj: { [key: string]: string } = {
   shirts: new URL('../assets/images/category/shirts.jpg', import.meta.url).href,
   tshirts: new URL('../assets/images/category/tshirts.jpg', import.meta.url).href,
-  pants: new URL('../assets/images/category/pants.jpg', import.meta.url).href
+  pants: new URL('../assets/images/category/pants.jpg', import.meta.url).href,
+  skirt: new URL('../assets/images/category/skirt.jpg', import.meta.url).href,
+  coat: new URL('../assets/images/category/coat.jpg', import.meta.url).href
 }
 
 /** 兌換 */

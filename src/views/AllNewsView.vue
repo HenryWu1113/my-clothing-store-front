@@ -53,7 +53,7 @@ import {
 import NewsCard from '@/components/cards/NewsCard.vue'
 import TopImgWrap from '@/components/topBar/TopImgWrap.vue'
 
-const imgSrc = ref(new URL('../assets/images/thunderstorm.jpg', import.meta.url).href)
+const imgSrc = ref(new URL('../assets/images/topImg2.jpg', import.meta.url).href)
 
 const message = useMessage()
 

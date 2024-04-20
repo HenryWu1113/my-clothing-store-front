@@ -56,7 +56,7 @@
     }
   }
   .product-info {
-    height: 160px;
+    // height: 160px;
     display: flex;
     flex-direction: column;
     padding: 0.5rem;

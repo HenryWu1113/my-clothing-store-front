@@ -19,7 +19,7 @@
     height: 100%;
     object-fit: cover;
     opacity: 0.7;
-    object-position: bottom;
+    object-position: center;
   }
   .title {
     position: absolute;
