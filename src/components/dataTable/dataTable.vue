@@ -225,31 +225,49 @@
       // background: rgba(0, 0, 0, 0.1);
       background: $loading-bg-color;
       .loader {
-        width: 20px;
-        height: 20px;
+        width: 65px;
         aspect-ratio: 1;
-        animation: l13-0 2s linear infinite;
+        position: relative;
       }
-      .loader::before,
-      .loader::after {
+      .loader:before,
+      .loader:after {
         content: '';
         position: absolute;
-        inset: 0;
-        border-radius: 50%;
-        background: $loading-ball-color;
-        animation: l13-1 0.5s cubic-bezier(0.5, -500, 0.5, 500) infinite;
+        border-radius: 50px;
+        box-shadow: 0 0 0 3px inset $text-color;
+        animation: l5 2.5s infinite;
       }
-      .loader::after {
-        animation-delay: -0.15s;
+      .loader:after {
+        animation-delay: -1.25s;
+        border-radius: 0;
       }
-      @keyframes l13-0 {
-        100% {
-          transform: rotate(360deg);
+      @keyframes l5 {
+        0% {
+          inset: 0 35px 35px 0;
         }
-      }
-      @keyframes l13-1 {
+        12.5% {
+          inset: 0 35px 0 0;
+        }
+        25% {
+          inset: 35px 35px 0 0;
+        }
+        37.5% {
+          inset: 35px 0 0 0;
+        }
+        50% {
+          inset: 35px 0 0 35px;
+        }
+        62.5% {
+          inset: 0 0 0 35px;
+        }
+        75% {
+          inset: 0 0 35px 35px;
+        }
+        87.5% {
+          inset: 0 0 35px 0;
+        }
         100% {
-          transform: translate(0.5px);
+          inset: 0 35px 35px 0;
         }
       }
     }
