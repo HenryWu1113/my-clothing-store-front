@@ -1,12 +1,3 @@
 {
-  "rewrites": [
-    { "source": "/product/:id", "destination": "/index.html" },
-    { "source": "/outfits/:clerkId", "destination": "/index.html" },
-    { "source": "/outfit/:id", "destination": "/index.html" },
-    { "source": "/store/:id", "destination": "/index.html" },
-    { "source": "/order/:id", "destination": "/index.html" },
-    { "source": "/news/:id", "destination": "/index.html" },
-    { "source": "/test/:id", "destination": "/index.html" },
-    { "source": "/:path*", "destination": "/index.html" }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
