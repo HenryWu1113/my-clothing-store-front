@@ -179,11 +179,11 @@ function exchangeCategory() {
 }
 
 watch(
-  () => _.cloneDeep(route),
+  () => _.cloneDeep(route.query),
   (newVal) => {
-    console.log(newVal.query)
+    console.log(newVal)
 
-    getCategories(newVal.query)
+    getCategories(newVal)
   },
   { immediate: true, deep: true }
 )

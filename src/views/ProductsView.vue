@@ -300,15 +300,15 @@ const filterSortBtns = computed(() => {
 })
 
 watch(
-  () => _.cloneDeep(route),
+  () => _.cloneDeep(route.query),
   (newVal, oldVal) => {
-    console.log(newVal.query)
+    console.log(newVal)
 
-    if (newVal.query.clothingGender !== oldVal?.query?.clothingGender) {
+    if (newVal.clothingGender !== oldVal?.clothingGender) {
       resetFilter()
     }
 
-    getProducts(newVal.query)
+    getProducts(newVal)
   },
   { immediate: true, deep: true }
 )
