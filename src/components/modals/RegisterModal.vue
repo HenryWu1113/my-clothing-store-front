@@ -28,7 +28,7 @@
             </n-form>
           </div>
           <div class="modal-footer">
-            <div class="quick-login">
+            <div v-if="false" class="quick-login">
               <n-icon :component="LogoGoogle"></n-icon>
               <n-icon :component="LogoFacebook"></n-icon>
               <n-icon :component="LogoGithub"></n-icon>
