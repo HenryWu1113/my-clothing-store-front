@@ -108,10 +108,10 @@
         gap: 5px;
 
         &.active {
-          border: 2px solid rgb(154, 223, 247);
+          border: 1px solid rgb(122, 176, 194);
           font-weight: bold;
-          background: rgb(182, 205, 214);
-          color: white;
+          //background: rgb(182, 205, 214);
+          color: rgb(122, 176, 194);
         }
       }
     }
