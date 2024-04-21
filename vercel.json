@@ -1,7 +1,11 @@
 {
   "rewrites": [
-    { "source": "^/user/([^/]+)$", "destination": "/user.html" },
-    { "source": "^/([^/]+)$", "destination": "/index.html" },
-    { "source": "^/(.*)$", "destination": "/index.html" }
+    { "source": "/product/:id", "destination": "/index.html" },
+    { "source": "/outfits/:clerkId", "destination": "/index.html" },
+    { "source": "/outfit/:id", "destination": "/index.html" },
+    { "source": "/store/:id", "destination": "/index.html" },
+    { "source": "/order/:id", "destination": "/index.html" },
+    { "source": "/news/:id", "destination": "/index.html" },
+    { "source": "/:path*", "destination": "/index.html" }
   ]
 }
