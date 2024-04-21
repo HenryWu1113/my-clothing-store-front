@@ -174,7 +174,7 @@ const router = createRouter({
           }
         },
         {
-          path: 'test/:id',
+          path: 'test/test',
           name: 'test',
           component: () => import('../views/AboutUs.vue'),
           meta: {
