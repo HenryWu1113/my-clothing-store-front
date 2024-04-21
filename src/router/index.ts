@@ -172,15 +172,6 @@ const router = createRouter({
             title: `${mainTitle} | 最新消息`,
             login: false
           }
-        },
-        {
-          path: 'test/test',
-          name: 'test',
-          component: () => import('../views/AboutUs.vue'),
-          meta: {
-            title: `${mainTitle} | 測試`,
-            login: false
-          }
         }
       ]
     },
