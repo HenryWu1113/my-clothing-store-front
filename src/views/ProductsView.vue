@@ -22,14 +22,14 @@
           class="price-input"
           v-model:value="priceRange.gte"
           :validator="(x: number) => x < priceRange.lte"
-          :disabled="disabled"
+          :disabled="!disabled"
           :min="0"
         />
         <n-input-number
           class="price-input"
           v-model:value="priceRange.lte"
           :validator="(x: number) => x > priceRange.gte"
-          :disabled="disabled"
+          :disabled="!disabled"
           :min="1"
         />
         <n-input
@@ -179,7 +179,7 @@ const router = useRouter()
 
 const loading = ref(false)
 
-const disabled = ref(true)
+const disabled = ref(false)
 const keyword = ref('')
 const priceRange = ref({
   gte: 0,
@@ -268,7 +268,7 @@ function advanceSearch() {
     delete queryObj.q
   }
   // 允許價格區間就加入 query 沒有則刪除
-  if (!disabled.value) {
+  if (disabled.value) {
     queryObj.gte = String(priceRange.value.gte)
     queryObj.lte = String(priceRange.value.lte)
   } else {
@@ -284,7 +284,7 @@ function resetFilter() {
     gte: 0,
     lte: 1000
   }
-  disabled.value = true
+  disabled.value = false
   keyword.value = ''
   selectSortValue.value = 'integrate'
 }

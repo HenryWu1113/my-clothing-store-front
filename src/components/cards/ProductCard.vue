@@ -131,13 +131,15 @@ import { Filter } from '@vicons/fa'
 import { useRouter, useRoute } from 'vue-router'
 import type { IProduct } from '@/types'
 import { useUserStore } from '@/stores/user'
+import { useLoginModalStore } from '@/stores/useLoginModal'
 import { storeToRefs } from 'pinia'
 import { numberToCommaString } from '@/composables/index'
 import { api } from '@/plugins/axios'
 
 const message = useMessage()
-const { favorites } = storeToRefs(useUserStore())
+const { favorites, token } = storeToRefs(useUserStore())
 const { editFav } = useUserStore()
+const { onOpen } = useLoginModalStore()
 
 const props = defineProps({
   product: {
@@ -151,6 +153,9 @@ const props = defineProps({
 })
 
 async function editFavorite(product_Id: string) {
+  if (token.value.length === 0) {
+    return onOpen()
+  }
   try {
     const data = await editFav(product_Id)
     message.success(data?.message)

@@ -3,6 +3,14 @@
     <TopImgWrap :imgSrc="imgSrc" :icon="SnowOutline" title="最新消息" />
     <div class="myContainer news-bottom-wrap">
       <div class="news-lists-wrap">
+        <template v-if="loading">
+          <n-skeleton
+            v-for="item in Array.from({ length: 6 }, (_, idx) => idx)"
+            :key="item"
+            :sharp="false"
+            size="medium"
+          />
+        </template>
         <NewsCard v-for="(news, idx) in filterNewsArr" :news="news" :idx="idx" :key="news._id" />
       </div>
       <n-pagination v-model:page="currentPage" :page-count="pageCount" :page-slot="5" />
@@ -28,6 +36,11 @@
       flex-wrap: wrap;
       gap: 1rem;
       width: 100%;
+
+      .n-skeleton {
+        width: calc((100% - 2rem) / 3);
+        height: 549.59px !important;
+      }
     }
   }
 }
@@ -59,12 +72,15 @@ const message = useMessage()
 
 const newsArr = ref<INews[]>([])
 
+const loading = ref(false)
+
 const pageSize = ref(6)
 const currentPage = ref(1)
 const pageCount = ref(1)
 
 /** 取得最新消息 */
 async function getAllNews() {
+  loading.value = true
   try {
     const { data } = await api().get('/news')
     console.log(data)
@@ -76,6 +92,7 @@ async function getAllNews() {
   } catch (error: any) {
     message.error(error.isAxiosError ? error.response.data.message : error.message)
   }
+  loading.value = false
 }
 getAllNews()
 

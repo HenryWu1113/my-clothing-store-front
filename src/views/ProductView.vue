@@ -183,7 +183,7 @@
                   round
                   type="warning"
                   ghost
-                  @click="commentModal.onOpen()"
+                  @click="openCommentModal()"
                 >
                   <template #icon>
                     <n-icon :component="Pencil"> </n-icon>
@@ -612,6 +612,7 @@ import { api } from '@/plugins/axios'
 import type { IProduct, IOutfit, IRating } from '@/types'
 import { numberToCommaString, compareObjects, timeFromNow } from '@/composables'
 import { useUserStore } from '@/stores/user'
+import { useLoginModalStore } from '@/stores/useLoginModal'
 import { useCommentModalStore } from '@/stores/useCommentModal'
 import { ArrowUndoOutline, Pencil, EllipsisVerticalSharp } from '@vicons/ionicons5'
 
@@ -631,6 +632,7 @@ const { userId } = storeToRefs(useUserStore())
 
 const user = useUserStore()
 const commentModal = useCommentModalStore()
+const loginModal = useLoginModalStore()
 const message = useMessage()
 const dialog = useDialog()
 const loadingBar = useLoadingBar()
@@ -802,6 +804,11 @@ async function addCart() {
   productForm.value.loading = false
 }
 
+function openCommentModal() {
+  if (user.token.length === 0) return loginModal.onOpen()
+  commentModal.onOpen()
+}
+
 /** 刪除自己評論 */
 async function deleteComment() {
   try {
@@ -867,5 +874,15 @@ watch(
     getRelatedOutfits()
   },
   { immediate: true }
+)
+
+// 偵測到在此登入 有了 token 重撈評論資料
+watch(
+  () => user.token,
+  () => {
+    if (user.token.length !== 0) {
+      getRatings()
+    }
+  }
 )
 </script>

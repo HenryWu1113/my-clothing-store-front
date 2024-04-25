@@ -140,6 +140,7 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
+        white-space: nowrap;
       }
 
       > .n-icon {
