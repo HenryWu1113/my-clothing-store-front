@@ -1,6 +1,6 @@
 <template>
   <div class="store-card" :style="amimationDelay" @click="$router.push(`/store/${store._id}`)">
-    <div class="store-name">{{ store.name }}</div>
+    <div class="store-name">{{ store.name }}({{ store.position }})</div>
     <div class="phone">電話 : {{ store.phone }}</div>
     <div class="address">地址 : {{ store.address }}</div>
     <div class="sell-category">
@@ -44,7 +44,7 @@
     align-items: center;
     gap: 10px;
 
-    >div {
+    > div {
       display: flex;
       gap: 5px;
     }

@@ -18,7 +18,8 @@
         <div class="other-news-lists">
           <div
             class="other-news"
-            v-for="oNews in otherNews"
+            :style="amimationDelay(idx)"
+            v-for="(oNews, idx) in otherNews"
             :key="oNews._id"
             @click="$router.push(`/news/${oNews._id}`)"
           >
@@ -42,7 +43,6 @@
         </div>
       </div>
     </div>
-    <DoorOpenLoader :onOpen="!isLoaded" />
   </div>
 </template>
 
@@ -93,6 +93,7 @@
       // padding-right: 10rem;
       display: flex;
       flex-direction: column;
+
       > .title {
         font-size: 1.5rem;
         color: $text-color2;
@@ -110,6 +111,7 @@
           height: 90px;
           border-radius: 5px;
           cursor: pointer;
+          @extend %AshowEffect;
           &:hover {
             background: $border-color;
           }
@@ -165,7 +167,7 @@ import { SnowOutline, CalendarOutline } from '@vicons/ionicons5'
 import { formatTime, stringEllipsis } from '@/composables'
 import type { INews } from '@/types'
 import { useRoute, useRouter } from 'vue-router'
-import { useMessage } from 'naive-ui'
+import { useMessage, useLoadingBar } from 'naive-ui'
 import { api } from '@/plugins/axios'
 
 import TopImgWrap from '@/components/topBar/TopImgWrap.vue'
@@ -174,10 +176,9 @@ import DoorOpenLoader from '@/components/DoorOpenLoader.vue'
 const route = useRoute()
 const router = useRouter()
 const message = useMessage()
+const loadingBar = useLoadingBar()
 
 const imgSrc = ref(new URL('../assets/images/topImg2.jpg', import.meta.url).href)
-
-const isLoaded = ref(true)
 
 const news = ref<INews>({
   _id: '',
@@ -195,13 +196,14 @@ let controller = new AbortController()
 
 async function getNews() {
   try {
-    isLoaded.value = false
+    loadingBar.start()
     const id = route.params.id
     const { data } = await api().get(`/news/${id}`, { signal: controller.signal })
     news.value = data.result
-    isLoaded.value = true
+    loadingBar.finish()
     console.log(news.value)
   } catch (error: any) {
+    loadingBar.error()
     controller.abort()
     controller = new AbortController()
     console.log(error)
@@ -225,6 +227,10 @@ async function getAllNews() {
   await getNews()
   getAllNews()
 })()
+
+const amimationDelay = (idx: number) => {
+  return { animationDelay: `${idx * 0.1}s` }
+}
 
 watch(route, async () => {
   await getNews()

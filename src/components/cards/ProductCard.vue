@@ -35,14 +35,16 @@
 .product-card {
   border-radius: 10px;
   box-shadow: 0px 0px 5px $border-color;
-  overflow: hidden;
+  // overflow: hidden;
   cursor: pointer;
   @extend %AshowEffect;
 
   .product-img-wrap {
     position: relative;
-    height: calc(100% - 160px);
+    height: calc(100% - 120px);
     overflow: hidden;
+    border-radius: 10px 10px 0 0;
+
     &:hover {
       > img {
         transform: scale(1.1);
@@ -95,14 +97,14 @@
     }
     .product-name {
       height: 60px;
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: bold;
       color: $text-color;
     }
     .product-price {
       display: flex;
       gap: 1rem;
-      font-size: 1.2rem;
+      font-size: 1rem;
       color: $text-color;
     }
     .product-rate {

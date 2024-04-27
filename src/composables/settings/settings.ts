@@ -79,7 +79,7 @@ export const homeCarousel: homeCarouselType[] = [
           showBtn: true,
           position: 'left',
           textGradient: 'error',
-          location: '/products?clothingGender=female&clothingPart=shirts&sort=integrate'
+          location: '/products?clothingGender=女&clothingPart=shirts&sort=integrate'
         }
       },
       {
@@ -105,7 +105,7 @@ export const homeCarousel: homeCarouselType[] = [
           price: null,
           showBtn: true,
           position: 'right',
-          location: '/products?clothingGender=female&clothingPart=shirts&sort=integrate'
+          location: '/products?clothingGender=女&clothingPart=shirts&sort=integrate'
         }
       }
     ]
@@ -123,7 +123,7 @@ export const homeCarousel: homeCarouselType[] = [
           price: null,
           showBtn: true,
           position: 'right',
-          location: '/products?clothingGender=female&clothingPart=pants&sort=integrate'
+          location: '/products?clothingGender=女&clothingPart=pants&sort=integrate'
         }
       },
       {
@@ -136,7 +136,7 @@ export const homeCarousel: homeCarouselType[] = [
           price: null,
           showBtn: true,
           position: 'right',
-          location: '/products?clothingGender=male&clothingPart=tshirts&sort=integrate'
+          location: '/products?clothingGender=男&clothingPart=tshirts&sort=integrate'
         }
       },
       {
